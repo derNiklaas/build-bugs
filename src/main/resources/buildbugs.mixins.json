@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "de.derniklaas.buildbugs.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ChatMixin",
+    "NoxesiumMccGameStatePacketMixin",
+    "NoxesiumMccServerPacketMixin"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

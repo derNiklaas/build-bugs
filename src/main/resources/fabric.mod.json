@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "build-bugs",
+  "version": "${version}",
+  "name": "Build Bugs",
+  "description": "Easily report build bugs in the funny discord channel!",
+  "authors": [
+    "derNiklaas"
+  ],
+  "contact": {
+    "homepage": "https://github.com/derNiklaas",
+    "email": "info@derniklaas.de"
+  },
+  "license": "MIT",
+  "icon": "assets/buildbugs/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "de.derniklaas.buildbugs.BuildBugsClientEntrypoint"
+      }
+    ]
+  },
+  "mixins": [
+    "buildbugs.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=17",
+    "fabric-language-kotlin": ">=${fabric_kotlin_version}",
+    "noxesium": ">=1.1.1"
+  }
+}
