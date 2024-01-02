@@ -96,6 +96,9 @@ object BugCreator {
      */
     fun setClipboard(client: MinecraftClient, text: String) {
         clipboard.setClipboard(client.window.handle, text)
-        Utils.sendChatMessage("Copied ${if (BuildBugsClientEntrypoint.config.debugMode) "'$text' " else ""}to clipboard.", Formatting.GREEN)
+        Utils.sendChatMessage(
+            "Copied ${if (BuildBugsClientEntrypoint.config.debugMode) "'${text.trim()}' " else ""}to clipboard.",
+            Formatting.GREEN
+        )
     }
 }
