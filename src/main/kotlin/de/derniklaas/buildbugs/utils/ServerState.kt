@@ -20,7 +20,6 @@ data class ServerState(
      * If it's not known, it will return the [type] and [subType]
      */
     fun getFancyName() = when (type) {
-        // ------ MCC Island -------
         "lobby" -> "Lobby"
         // Game Lobbies
         "lobby-game" -> when (subType) {
@@ -41,9 +40,7 @@ data class ServerState(
         "battle-box" -> "Battle Box"
         "sky-battle" -> "Sky Battle"
 
-        // ------ MCC Event -------
-        // Event doesn't have types yet, so we ignore it for now
-        "limbo" -> ""
+        // TODO: Add event gamemodes
 
         else -> "$type $subType"
     }
