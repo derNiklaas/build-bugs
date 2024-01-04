@@ -40,7 +40,8 @@ data class ServerState(
         "battle-box" -> "Battle Box"
         "sky-battle" -> "Sky Battle"
 
-        // TODO: Add event gamemodes
+        // Event gametype
+        "limbo" -> ""
 
         else -> "$type $subType"
     }
