@@ -3,13 +3,15 @@
   "id": "build-bugs",
   "version": "${version}",
   "name": "Build Bugs",
-  "description": "Easily report build bugs in the funny discord channel!",
+  "description": "Simple Utility mod to speed up (build-) bug reports on MCC Island!",
   "authors": [
     "derNiklaas"
   ],
   "contact": {
     "homepage": "https://github.com/derNiklaas",
-    "email": "info@derniklaas.de"
+    "email": "info@derniklaas.de",
+    "sources": "https://github.com/derniklaas/build-bugs",
+    "issues": "https://github.com/derNiklaas/build-bugs/issues"
   },
   "license": "MIT",
   "icon": "assets/buildbugs/icon.png",
