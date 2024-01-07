@@ -13,7 +13,8 @@ import net.minecraft.util.math.BlockPos
 
 object BugCreator {
 
-    private var gameState: ServerState = ServerState.UNKNOWN
+    var gameState: ServerState = ServerState.UNKNOWN
+        private set
     private val clipboard: Clipboard = Clipboard()
 
     /**
@@ -76,6 +77,13 @@ object BugCreator {
      */
     fun handleGameStatePacket(packet: ClientboundMccGameStatePacket) {
         gameState = gameState.withMapName(packet.mapName)
+    }
+
+    /**
+     * Updates the map saved in [gameState] with the given [name].
+     */
+    fun updateParkourWarriorCourse(name: String) {
+        gameState = gameState.withMapName(name)
     }
 
     private fun getCopyMessage(area: String, map: String, position: BlockPos, discord: Boolean = false): String {
