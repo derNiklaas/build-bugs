@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 
 @Mixin(ClientboundMccServerPacket::class)
-class NoxesiumMccServerPacketMixin {
+abstract class NoxesiumMccServerPacketMixin {
 
     @Inject(at = [At("HEAD")], method = ["receive"])
     fun receive(player: ClientPlayerEntity, responseSender: PacketSender, info: CallbackInfo) {
