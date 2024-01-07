@@ -18,6 +18,20 @@ class NoxesiumMccGameStatePacketMixin {
     @Inject(at = [At("HEAD")], method = ["receive"])
     fun receive(player: ClientPlayerEntity, responseSender: PacketSender, info: CallbackInfo) {
         val packet = (this as Object) as ClientboundMccGameStatePacket
+
+        // ignore parkour warrior updates, as they only contain "Parkour Warrior Survivor" or nothing
+        if (BugCreator.gameState.type == "parkour-warrior") {
+            // Provide debug info
+            if (BuildBugsClientEntrypoint.config.debugMode) {
+                Utils.sendChatMessage(
+                    "Blocked GameStatePacket: (mapName=${packet.mapName}, mapId=${packet.mapId}, phaseType=${packet.phaseType}, stage=${packet.stage})",
+                    Formatting.GRAY
+                )
+            }
+
+            return
+        }
+
         BugCreator.handleGameStatePacket(packet)
         if (BuildBugsClientEntrypoint.config.debugMode) {
             Utils.sendChatMessage(
