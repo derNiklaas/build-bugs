@@ -17,6 +17,19 @@ class NoxesiumMccServerPacketMixin {
     fun receive(player: ClientPlayerEntity, responseSender: PacketSender, info: CallbackInfo) {
         val packet = (this as Object) as ClientboundMccServerPacket
         BugCreator.handleServerStatePacket(packet)
+
+        // Set default map names in PKW
+        if(packet.type == "parkour-warrior") {
+            when(packet.subType) {
+                "daily", "main" -> {
+                    BugCreator.updateParkourWarriorCourse("Dojo Entrance")
+                }
+                "survival" -> {
+                    BugCreator.updateParkourWarriorCourse("Survivor Start")
+                }
+            }
+        }
+
         if (BuildBugsClientEntrypoint.config.debugMode) {
             BugCreator.printCurrentGameState()
         }
