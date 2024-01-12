@@ -1,7 +1,6 @@
 package de.derniklaas.buildbugs.mixin
 
 import com.noxcrew.noxesium.network.clientbound.ClientboundMccServerPacket
-import de.derniklaas.buildbugs.BuildBugsClientEntrypoint
 import de.derniklaas.buildbugs.BugCreator
 import de.derniklaas.buildbugs.Constants
 import net.fabricmc.fabric.api.networking.v1.PacketSender
@@ -29,10 +28,6 @@ abstract class NoxesiumMccServerPacketMixin {
                     BugCreator.updateParkourWarriorCourse("Survivor Start")
                 }
             }
-        }
-
-        if (BuildBugsClientEntrypoint.config.debugMode) {
-            BugCreator.printCurrentGameState()
         }
     }
 }

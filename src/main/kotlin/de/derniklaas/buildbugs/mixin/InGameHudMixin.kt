@@ -1,12 +1,11 @@
 package de.derniklaas.buildbugs.mixin
 
 import de.derniklaas.buildbugs.BugCreator
-import de.derniklaas.buildbugs.BuildBugsClientEntrypoint
+import de.derniklaas.buildbugs.Constants
 import de.derniklaas.buildbugs.utils.Utils
 import java.util.Optional
 import net.minecraft.client.gui.hud.InGameHud
 import net.minecraft.text.Text
-import net.minecraft.util.Formatting
 import org.spongepowered.asm.mixin.Mixin
 import org.spongepowered.asm.mixin.injection.At
 import org.spongepowered.asm.mixin.injection.Inject
@@ -38,11 +37,7 @@ abstract class InGameHudMixin {
 
         val name = title.siblings.first().content.visit { Optional.of(it) }.get()
 
+        Utils.sendDebugMessage("Found course segment '$name'.")
         BugCreator.updateParkourWarriorCourse(name)
-
-        if (BuildBugsClientEntrypoint.config.debugMode) {
-            Utils.sendChatMessage("Found course segment '$name'.", Formatting.GRAY)
-            BugCreator.printCurrentGameState()
-        }
     }
 }

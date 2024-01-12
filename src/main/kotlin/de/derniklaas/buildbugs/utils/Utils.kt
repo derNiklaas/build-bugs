@@ -56,4 +56,10 @@ object Utils {
         val server = MinecraftClient.getInstance().currentServerEntry ?: return false
         return server.address.endsWith("mccisland.net") || server.address.endsWith("mccisland.com")
     }
+
+    fun sendDebugMessage(message: String) {
+        if(BuildBugsClientEntrypoint.config.debugMode) {
+            sendChatMessage(message, Formatting.GRAY)
+        }
+    }
 }

@@ -70,6 +70,7 @@ object BugCreator {
      */
     fun handleServerStatePacket(packet: ClientboundMccServerPacket) {
         gameState = ServerState.fromPacket(packet)
+        printCurrentGameState()
     }
 
     /**
@@ -77,6 +78,7 @@ object BugCreator {
      */
     fun handleGameStatePacket(packet: ClientboundMccGameStatePacket) {
         gameState = gameState.withMapName(packet.mapName)
+        printCurrentGameState()
     }
 
     /**
@@ -84,6 +86,7 @@ object BugCreator {
      */
     fun updateParkourWarriorCourse(name: String) {
         gameState = gameState.withMapName(name)
+        printCurrentGameState()
     }
 
     private fun getCopyMessage(area: String, map: String, position: BlockPos, discord: Boolean = false): String {
@@ -96,7 +99,7 @@ object BugCreator {
      * Prints the current [gameState] to the chat.
      */
     fun printCurrentGameState() {
-        Utils.sendChatMessage("Current gameState object: $gameState", Formatting.GRAY)
+        Utils.sendDebugMessage("Current gameState object: $gameState")
     }
 
     /**
