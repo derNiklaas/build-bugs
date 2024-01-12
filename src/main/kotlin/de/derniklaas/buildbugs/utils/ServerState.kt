@@ -1,6 +1,7 @@
 package de.derniklaas.buildbugs.utils
 
 import com.noxcrew.noxesium.network.clientbound.ClientboundMccServerPacket
+import de.derniklaas.buildbugs.Constants
 
 data class ServerState(
     val type: String, val subType: String, val associatedGame: String, val legacyGameId: String, val mapName: String
@@ -20,28 +21,29 @@ data class ServerState(
      * If it's not known, it will return the [type] and [subType]
      */
     fun getFancyName() = when (type) {
-        "lobby" -> "Lobby"
+        Constants.LOBBY -> "Lobby"
         // Game Lobbies
-        "lobby-game" -> when (subType) {
-            "parkour-warrior" -> "Parkour Warrior Lobby"
-            "hitw" -> "HITW Lobby"
-            "tgttos" -> "TGTTOS Lobby"
-            "battle-box" -> "Battle Box Lobby"
-            "sky-battle" -> "Sky Battle Lobby"
-            "dynaball" -> "Dynaball Lobby"
+        Constants.GAME_LOBBY -> when (subType) {
+            Constants.PARKOUR_WARRIOR -> "Parkour Warrior Lobby"
+            Constants.HOLE_IN_THE_WALL -> "HITW Lobby"
+            Constants.TO_GET_TO_THE_OTHER_SIDE -> "TGTTOS Lobby"
+            Constants.BATTLE_BOX -> "Battle Box Lobby"
+            Constants.SKY_BATTLE -> "Sky Battle Lobby"
+            Constants.DYNABALL -> "Dynaball Lobby"
             else -> "$subType Lobby"
         }
 
         // Game modes
-        "parkour-warrior" -> "Parkour Warrior"
-        "hole-in-the-wall" -> "HITW"
-        "tgttos" -> "TGTTOS"
-        "dynaball" -> "Dynaball"
-        "battle-box" -> "Battle Box"
-        "sky-battle" -> "Sky Battle"
+        Constants.PARKOUR_WARRIOR -> "Parkour Warrior"
+        Constants.HOLE_IN_THE_WALL -> "HITW"
+        Constants.TO_GET_TO_THE_OTHER_SIDE -> "TGTTOS"
+        Constants.BATTLE_BOX -> "Battle Box"
+        Constants.SKY_BATTLE -> "Sky Battle"
+        Constants.DYNABALL -> "Dynaball"
 
-        // Event gametype
+        // Event gametypes
         "limbo" -> ""
+        UNKNOWN.type -> ""
 
         else -> "$type $subType"
     }

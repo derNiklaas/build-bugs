@@ -3,6 +3,7 @@ package de.derniklaas.buildbugs.mixin
 import com.noxcrew.noxesium.network.clientbound.ClientboundMccGameStatePacket
 import de.derniklaas.buildbugs.BugCreator
 import de.derniklaas.buildbugs.BuildBugsClientEntrypoint
+import de.derniklaas.buildbugs.Constants
 import de.derniklaas.buildbugs.utils.Utils
 import net.fabricmc.fabric.api.networking.v1.PacketSender
 import net.minecraft.client.network.ClientPlayerEntity
@@ -20,7 +21,7 @@ abstract class NoxesiumMccGameStatePacketMixin {
         val packet = (this as Object) as ClientboundMccGameStatePacket
 
         // ignore parkour warrior updates, as they only contain "Parkour Warrior Survivor" or nothing
-        if (BugCreator.gameState.type == "parkour-warrior") {
+        if (BugCreator.gameState.type == Constants.PARKOUR_WARRIOR) {
             // Provide debug info
             if (BuildBugsClientEntrypoint.config.debugMode) {
                 Utils.sendChatMessage(

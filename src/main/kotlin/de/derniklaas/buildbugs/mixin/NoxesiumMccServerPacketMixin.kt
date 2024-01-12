@@ -3,6 +3,7 @@ package de.derniklaas.buildbugs.mixin
 import com.noxcrew.noxesium.network.clientbound.ClientboundMccServerPacket
 import de.derniklaas.buildbugs.BuildBugsClientEntrypoint
 import de.derniklaas.buildbugs.BugCreator
+import de.derniklaas.buildbugs.Constants
 import net.fabricmc.fabric.api.networking.v1.PacketSender
 import net.minecraft.client.network.ClientPlayerEntity
 import org.spongepowered.asm.mixin.Mixin
@@ -19,12 +20,12 @@ abstract class NoxesiumMccServerPacketMixin {
         BugCreator.handleServerStatePacket(packet)
 
         // Set default map names in PKW
-        if(packet.type == "parkour-warrior") {
+        if(packet.type == Constants.PARKOUR_WARRIOR) {
             when(packet.subType) {
-                "daily", "main" -> {
+                Constants.PARKOUR_WARRIOR_DAILY, Constants.PARKOUR_WARRIOR_DOJO -> {
                     BugCreator.updateParkourWarriorCourse("Dojo Entrance")
                 }
-                "survival" -> {
+                Constants.PARKOUR_WARRIOR_SURVIVOR -> {
                     BugCreator.updateParkourWarriorCourse("Survivor Start")
                 }
             }
