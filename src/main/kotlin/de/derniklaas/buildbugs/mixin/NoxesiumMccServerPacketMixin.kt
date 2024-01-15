@@ -16,7 +16,7 @@ abstract class NoxesiumMccServerPacketMixin {
     @Inject(at = [At("HEAD")], method = ["receive"])
     fun receive(player: ClientPlayerEntity, responseSender: PacketSender, info: CallbackInfo) {
         val packet = (this as Object) as ClientboundMccServerPacket
-        BugCreator.handleServerStatePacket(packet)
+        BugCreator.handleServerStatePacket(packet, packet.type != Constants.PARKOUR_WARRIOR)
 
         // Set default map names in PKW
         if(packet.type == Constants.PARKOUR_WARRIOR) {

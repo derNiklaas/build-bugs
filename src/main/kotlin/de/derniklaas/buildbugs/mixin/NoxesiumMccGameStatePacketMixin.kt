@@ -21,11 +21,12 @@ abstract class NoxesiumMccGameStatePacketMixin {
         // ignore parkour warrior updates, as they only contain "Parkour Warrior Survivor" or nothing
         if (BugCreator.gameState.type == Constants.PARKOUR_WARRIOR) {
             // Provide debug info
-            Utils.sendDebugMessage("Blocked GameStatePacket: (mapName=${packet.mapName}, mapId=${packet.mapId}, phaseType=${packet.phaseType}, stage=${packet.stage})")
+            Utils.sendDebugMessage("Blocked GameStatePacket: (name: <green>${packet.mapName}</green>, id: ${packet.mapId}, phase: ${packet.phaseType}, stage: ${packet.stage})")
 
             return
         }
 
+        Utils.sendDebugMessage("Received GameStatePacket: (name: <green>${packet.mapName}</green>, id: ${packet.mapId}, phase: ${packet.phaseType}, stage: ${packet.stage})")
         BugCreator.handleGameStatePacket(packet)
     }
 }

@@ -1,44 +1,44 @@
 package de.derniklaas.buildbugs.utils
 
 import de.derniklaas.buildbugs.BuildBugsClientEntrypoint
+import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minecraft.client.MinecraftClient
-import net.minecraft.text.Text
-import net.minecraft.util.Formatting
 
 object Utils {
 
     /**
-     * Sends a [message] to the player.
+     * Sends a [message] in the MiniMessage format.
+     * See https://docs.advntr.dev/minimessage/format.html for the specs.
      */
-    fun sendChatMessage(message: String, color: Formatting = Formatting.WHITE) {
-        val msg = Text.literal(message).styled {
-            it.withColor(color)
-        }
-        sendChatMessage(msg)
+    fun sendMiniMessage(message: String, prefix: Boolean = true) {
+        val player = MinecraftClient.getInstance().player ?: return
+        val mm = MiniMessage.miniMessage()
+
+        val parsed = mm.deserialize("${if (prefix) "<gold>[Build Bugs]</gold> " else ""}$message")
+        player.sendMessage(parsed)
     }
 
     /**
-     * Sends a [message] to the player.
+     * Sends the [message] in green.
      */
-    fun sendChatMessage(message: Text) {
-        val prefix = Text.literal("[Build Bugs] ").styled {
-            it.withColor(Formatting.GOLD)
-        }
-        MinecraftClient.getInstance().inGameHud.chatHud.addMessage(prefix.append(message))
+    fun sendSuccessMessage(message: String, prefix: Boolean = true) {
+        sendMiniMessage("<green>$message</green>", prefix)
     }
 
-    fun getFormattedText(message: Text): Text {
-        val prefix = Text.literal("[Build Bugs] ").styled {
-            it.withColor(Formatting.GOLD)
-        }
-        return prefix.append(message)
+    /**
+     * Sends the [message] in red.
+     */
+    fun sendErrorMessage(message: String, prefix: Boolean = true) {
+        sendMiniMessage("<red>$message</red>", prefix)
     }
 
-    fun getFormattedText(message: String, color: Formatting = Formatting.WHITE): Text {
-        val msg = Text.literal(message).styled {
-            it.withColor(color)
+    /**
+     * Sends the [message] in gray.
+     */
+    fun sendDebugMessage(message: String, prefix: Boolean = true) {
+        if (BuildBugsClientEntrypoint.config.debugMode) {
+            sendMiniMessage("<gray>$message</gray>", prefix)
         }
-        return getFormattedText(msg)
     }
 
     /**
@@ -55,11 +55,5 @@ object Utils {
     fun isOnIsland(): Boolean {
         val server = MinecraftClient.getInstance().currentServerEntry ?: return false
         return server.address.endsWith("mccisland.net") || server.address.endsWith("mccisland.com")
-    }
-
-    fun sendDebugMessage(message: String) {
-        if(BuildBugsClientEntrypoint.config.debugMode) {
-            sendChatMessage(message, Formatting.GRAY)
-        }
     }
 }

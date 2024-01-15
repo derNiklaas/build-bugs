@@ -6,9 +6,6 @@ import de.derniklaas.buildbugs.utils.ServerState
 import de.derniklaas.buildbugs.utils.Utils
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.util.Clipboard
-import net.minecraft.text.ClickEvent
-import net.minecraft.text.Text
-import net.minecraft.util.Formatting
 import net.minecraft.util.math.BlockPos
 
 object BugCreator {
@@ -27,13 +24,13 @@ object BugCreator {
 
         // Check if the player is connected to a server
         if (server.isLocal) {
-            Utils.sendChatMessage("You are not connected to a server.", Formatting.RED)
+            Utils.sendErrorMessage("You are not connected to a server.")
             return
         }
 
         // Check if the player is connected to a MCC related server
         if (!Utils.isOnMCCServer()) {
-            Utils.sendChatMessage("You are not connected to a MCC related server.", Formatting.RED)
+            Utils.sendErrorMessage("You are not connected to a MCC related server.")
             return
         }
 
@@ -42,23 +39,10 @@ object BugCreator {
         val blockPos = player.blockPos
         val map = gameState.mapName
 
-        val minecraftMessage = getCopyMessage(area, map, blockPos)
+        val minecraftMessage = getCopyMessage(area, map, blockPos).trim()
         val discordMessage = getCopyMessage(area, map, blockPos, true)
 
-        val message = Text.literal(minecraftMessage).styled {
-            it.withColor(Formatting.WHITE).withClickEvent(
-                ClickEvent(
-                    ClickEvent.Action.COPY_TO_CLIPBOARD, discordMessage
-                )
-            )
-        }.append(Text.literal("[CLICK TO COPY]").styled {
-            it.withColor(Formatting.YELLOW).withBold(true).withClickEvent(
-                ClickEvent(
-                    ClickEvent.Action.COPY_TO_CLIPBOARD, discordMessage
-                )
-            )
-        })
-        Utils.sendChatMessage(message)
+        Utils.sendMiniMessage("<click:copy_to_clipboard:'$discordMessage'>$minecraftMessage <yellow><bold>[CLICK TO COPY]</bold></yellow></click>")
 
         if (BuildBugsClientEntrypoint.config.copyToClipboard) {
             setClipboard(client, discordMessage)
@@ -68,9 +52,11 @@ object BugCreator {
     /**
      * Updates [gameState] when a new packet is received.
      */
-    fun handleServerStatePacket(packet: ClientboundMccServerPacket) {
+    fun handleServerStatePacket(packet: ClientboundMccServerPacket, printState: Boolean) {
         gameState = ServerState.fromPacket(packet)
-        printCurrentGameState()
+        if(printState) {
+            printCurrentGameState()
+        }
     }
 
     /**
@@ -91,7 +77,7 @@ object BugCreator {
 
     private fun getCopyMessage(area: String, map: String, position: BlockPos, discord: Boolean = false): String {
         val start = if (area.isNotBlank()) "$area, " else ""
-        val codeBlock = if (!discord) "" else "``"
+        val codeBlock = if (!discord) "" else "`"
         return "[$start${if (map.isNotBlank() && map != ServerState.UNKNOWN.mapName) map else "$codeBlock${position.x} ${position.y} ${position.z}$codeBlock"}] "
     }
 
@@ -99,7 +85,7 @@ object BugCreator {
      * Prints the current [gameState] to the chat.
      */
     fun printCurrentGameState() {
-        Utils.sendDebugMessage("Current gameState object: $gameState")
+        Utils.sendDebugMessage("Current gameState: ${gameState.miniMessageString()}")
     }
 
     /**
@@ -107,9 +93,6 @@ object BugCreator {
      */
     fun setClipboard(client: MinecraftClient, text: String) {
         clipboard.setClipboard(client.window.handle, text)
-        Utils.sendChatMessage(
-            "Copied ${if (BuildBugsClientEntrypoint.config.debugMode) "'${text.trim()}' " else ""}to clipboard.",
-            Formatting.GREEN
-        )
+        Utils.sendMiniMessage("<i>Copied </i>${if (BuildBugsClientEntrypoint.config.debugMode) "<green>${text.trim()}</green> " else ""}<i>to clipboard.</i>")
     }
 }

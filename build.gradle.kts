@@ -38,6 +38,7 @@ dependencies {
     include(implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")!!)
     modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_api_version")}")
     modCompileOnly("maven.modrinth:noxesium:${property("noxesium_version")}")
+    modImplementation(include("net.kyori:adventure-platform-fabric:${property("adventure_version")}")!!)
 }
 
 tasks {

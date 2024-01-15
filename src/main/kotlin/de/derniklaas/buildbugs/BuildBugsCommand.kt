@@ -9,7 +9,6 @@ import de.derniklaas.buildbugs.utils.Utils
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.minecraft.command.CommandRegistryAccess
-import net.minecraft.util.Formatting
 
 object BuildBugsCommand {
     fun register(dispatcher: CommandDispatcher<FabricClientCommandSource>, registryAccess: CommandRegistryAccess) {
@@ -21,17 +20,9 @@ object BuildBugsCommand {
                     val value = BoolArgumentType.getBool(it, "value")
                     BuildBugsClientEntrypoint.config.setCopy(value)
                     if (BuildBugsClientEntrypoint.config.copyToClipboard) {
-                        it.source.sendFeedback(
-                            Utils.getFormattedText(
-                                "Copy to Clipboard enabled.", Formatting.GREEN
-                            )
-                        )
+                        Utils.sendMiniMessage("<green>Enabled</green> automatic copying to clipboard.")
                     } else {
-                        it.source.sendFeedback(
-                            Utils.getFormattedText(
-                                "Copy to Clipboard disabled.", Formatting.RED
-                            )
-                        )
+                        Utils.sendMiniMessage("<red>Disabled</red> automatic copying to clipboard.")
                     }
                     return@executes Command.SINGLE_SUCCESS
                 })
@@ -43,10 +34,10 @@ object BuildBugsCommand {
                     BuildBugsClientEntrypoint.config.setDebug(value)
 
                     if (BuildBugsClientEntrypoint.config.debugMode) {
-                        it.source.sendFeedback(Utils.getFormattedText("Debug mode enabled.", Formatting.GREEN))
+                        Utils.sendMiniMessage("<green>Enabled</green> Debug mode.")
                         BugCreator.printCurrentGameState()
                     } else {
-                        it.source.sendFeedback(Utils.getFormattedText("Debug mode disabled.", Formatting.RED))
+                        Utils.sendMiniMessage("<red>Disabled</red> Debug mode.")
                     }
 
                     return@executes Command.SINGLE_SUCCESS
@@ -59,17 +50,14 @@ object BuildBugsCommand {
                         val value = StringArgumentType.getString(it, "value")
                         BuildBugsClientEntrypoint.config.setEventAddress(value)
 
-                        it.source.sendFeedback(Utils.getFormattedText("Set event IP to '$value'.", Formatting.GREEN))
+                        Utils.sendSuccessMessage("Set event IP to <gold>$value</gold>.")
 
                         return@executes Command.SINGLE_SUCCESS
                     }
                 )
             )
         ).then(literal<FabricClientCommandSource>("version").executes {
-            val feedback = Utils.getFormattedText(
-                "Running BuildBugs v${BuildBugsClientEntrypoint.version}!", Formatting.GREEN
-            )
-            it.source.sendFeedback(feedback)
+            Utils.sendSuccessMessage("Running BuildBugs v${BuildBugsClientEntrypoint.version}!")
             return@executes Command.SINGLE_SUCCESS
         }).executes {
             BugCreator.report()

@@ -4,13 +4,13 @@ import com.noxcrew.noxesium.network.clientbound.ClientboundMccServerPacket
 import de.derniklaas.buildbugs.Constants
 
 data class ServerState(
-    val type: String, val subType: String, val associatedGame: String, val legacyGameId: String, val mapName: String
+    val type: String, val subType: String, val mapName: String
 ) {
     companion object {
-        val UNKNOWN = ServerState("Unknown", "Unknown", "Unknown", "Unknown", "Unknown")
+        val UNKNOWN = ServerState("Unknown", "Unknown", "Unknown")
 
         fun fromPacket(packet: ClientboundMccServerPacket): ServerState {
-            return ServerState(packet.type, packet.subType, packet.associatedGame, packet.legacyGameId, "")
+            return ServerState(packet.type, packet.subType, "")
         }
     }
 
@@ -52,4 +52,8 @@ data class ServerState(
      * Creates a copy of this [ServerState] with the [mapName] set to [name].
      */
     fun withMapName(name: String) = copy(mapName = name)
+
+    fun miniMessageString(): String {
+        return "type: <green>$type</green>, subType: <green>$subType</green>, map: <green>$mapName</green>"
+    }
 }
