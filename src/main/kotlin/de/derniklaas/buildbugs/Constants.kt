@@ -16,6 +16,9 @@ object Constants {
     const val PARKOUR_WARRIOR_DOJO = "main"
     const val PARKOUR_WARRIOR_SURVIVOR = "survival"
 
+    /* Phases */
+    const val PODIUM_PHASE = "podiumPhase"
+
     /* URLs */
     const val BUG_REPORT_URL = "https://p.nox.gs/"
 }
