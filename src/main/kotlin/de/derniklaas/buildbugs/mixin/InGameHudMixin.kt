@@ -38,6 +38,6 @@ abstract class InGameHudMixin {
         val name = title.siblings.first().content.visit { Optional.of(it) }.get()
 
         Utils.sendDebugMessage("Found course segment <green>$name</green>.")
-        BugCreator.updateParkourWarriorCourse(name)
+        BugCreator.updateMap(name)
     }
 }

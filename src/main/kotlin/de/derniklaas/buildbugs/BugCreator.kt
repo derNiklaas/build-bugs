@@ -1,6 +1,5 @@
 package de.derniklaas.buildbugs
 
-import com.noxcrew.noxesium.network.clientbound.ClientboundMccGameStatePacket
 import com.noxcrew.noxesium.network.clientbound.ClientboundMccServerPacket
 import de.derniklaas.buildbugs.utils.ServerState
 import de.derniklaas.buildbugs.utils.Utils
@@ -65,17 +64,9 @@ object BugCreator {
     }
 
     /**
-     * Updates the map saved in [gameState] when a new packet is received.
-     */
-    fun handleGameStatePacket(packet: ClientboundMccGameStatePacket) {
-        gameState = gameState.withMapName(packet.mapName)
-        printCurrentGameState()
-    }
-
-    /**
      * Updates the map saved in [gameState] with the given [name].
      */
-    fun updateParkourWarriorCourse(name: String) {
+    fun updateMap(name: String) {
         gameState = gameState.withMapName(name)
         printCurrentGameState()
     }

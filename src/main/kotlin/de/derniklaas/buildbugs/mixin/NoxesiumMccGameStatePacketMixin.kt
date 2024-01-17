@@ -28,6 +28,6 @@ abstract class NoxesiumMccGameStatePacketMixin {
         }
 
         Utils.sendDebugMessage("Received GameStatePacket: (name: <green>${packet.mapName}</green>, id: ${packet.mapId}, phase: ${packet.phaseType}, stage: ${packet.stage})")
-        BugCreator.handleGameStatePacket(packet)
+        BugCreator.updateMap(packet.mapName)
     }
 }

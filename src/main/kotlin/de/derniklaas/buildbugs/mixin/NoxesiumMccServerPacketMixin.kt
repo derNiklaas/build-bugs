@@ -22,10 +22,10 @@ abstract class NoxesiumMccServerPacketMixin {
         if(packet.type == Constants.PARKOUR_WARRIOR) {
             when(packet.subType) {
                 Constants.PARKOUR_WARRIOR_DAILY, Constants.PARKOUR_WARRIOR_DOJO -> {
-                    BugCreator.updateParkourWarriorCourse("Dojo Entrance")
+                    BugCreator.updateMap("Dojo Entrance")
                 }
                 Constants.PARKOUR_WARRIOR_SURVIVOR -> {
-                    BugCreator.updateParkourWarriorCourse("Survivor Start")
+                    BugCreator.updateMap("Survivor Start")
                 }
             }
         }
