@@ -3,7 +3,6 @@ package de.derniklaas.buildbugs
 import com.noxcrew.noxesium.network.clientbound.ClientboundMccServerPacket
 import de.derniklaas.buildbugs.utils.ServerState
 import de.derniklaas.buildbugs.utils.Utils
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.util.Clipboard
 import net.minecraft.util.math.BlockPos
@@ -42,10 +41,12 @@ object BugCreator {
         val minecraftMessage = getCopyMessage(area, map, blockPos).trim()
         val discordMessage = getCopyMessage(area, map, blockPos, true)
         Utils.sendMiniMessage(
-            "<click:copy_to_clipboard:'$discordMessage'>$minecraftMessage <yellow><bold>[CLICK TO COPY]</bold></yellow></click>",
-            true,
-            Placeholder.unparsed("<discord>", discordMessage),
-            Placeholder.unparsed("<minecraft>", minecraftMessage)
+            "<click:copy_to_clipboard:'${
+                discordMessage.replace(
+                    "'",
+                    "\\\'"
+                )
+            }'>$minecraftMessage <yellow><bold>[CLICK TO COPY]</bold></yellow></click>", true
         )
 
         if (BuildBugsClientEntrypoint.config.copyToClipboard) {
