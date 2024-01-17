@@ -10,7 +10,11 @@ data class ServerState(
         val UNKNOWN = ServerState("Unknown", "Unknown", "Unknown")
 
         fun fromPacket(packet: ClientboundMccServerPacket): ServerState {
-            return ServerState(packet.type, packet.subType, "")
+            return ServerState(
+                packet.type,
+                packet.subType,
+                if (packet.type in listOf(Constants.LOBBY, Constants.GAME_LOBBY)) "" else "Pre Game"
+            )
         }
     }
 
