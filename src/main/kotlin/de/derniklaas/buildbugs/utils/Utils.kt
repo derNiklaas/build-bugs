@@ -2,6 +2,7 @@ package de.derniklaas.buildbugs.utils
 
 import de.derniklaas.buildbugs.BuildBugsClientEntrypoint
 import net.kyori.adventure.text.minimessage.MiniMessage
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 import net.minecraft.client.MinecraftClient
 
 object Utils {
@@ -10,34 +11,34 @@ object Utils {
      * Sends a [message] in the MiniMessage format.
      * See https://docs.advntr.dev/minimessage/format.html for the specs.
      */
-    fun sendMiniMessage(message: String, prefix: Boolean = true) {
+    fun sendMiniMessage(message: String, prefix: Boolean = true, vararg replacements: TagResolver) {
         val player = MinecraftClient.getInstance().player ?: return
         val mm = MiniMessage.miniMessage()
 
-        val parsed = mm.deserialize("${if (prefix) "<gold>[Build Bugs]</gold> " else ""}$message")
+        val parsed = mm.deserialize("${if (prefix) "<gold>[Build Bugs]</gold> " else ""}$message", *replacements)
         player.sendMessage(parsed)
     }
 
     /**
      * Sends the [message] in green.
      */
-    fun sendSuccessMessage(message: String, prefix: Boolean = true) {
-        sendMiniMessage("<green>$message</green>", prefix)
+    fun sendSuccessMessage(message: String, prefix: Boolean = true, vararg replacements: TagResolver) {
+        sendMiniMessage("<green>$message</green>", prefix, *replacements)
     }
 
     /**
      * Sends the [message] in red.
      */
-    fun sendErrorMessage(message: String, prefix: Boolean = true) {
-        sendMiniMessage("<red>$message</red>", prefix)
+    fun sendErrorMessage(message: String, prefix: Boolean = true, vararg replacements: TagResolver) {
+        sendMiniMessage("<red>$message</red>", prefix, *replacements)
     }
 
     /**
      * Sends the [message] in gray.
      */
-    fun sendDebugMessage(message: String, prefix: Boolean = true) {
+    fun sendDebugMessage(message: String, prefix: Boolean = true, vararg replacements: TagResolver) {
         if (BuildBugsClientEntrypoint.config.debugMode) {
-            sendMiniMessage("<gray>$message</gray>", prefix)
+            sendMiniMessage("<gray>$message</gray>", prefix, *replacements)
         }
     }
 
