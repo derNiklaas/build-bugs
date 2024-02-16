@@ -33,6 +33,7 @@
     "minecraft": "~${minecraft_version}",
     "java": ">=17",
     "fabric-language-kotlin": ">=${fabric_kotlin_version}",
-    "noxesium": ">=1.1.1"
+    "noxesium": ">=${noxesium_version}",
+    "adventure-platform-fabric": ">=${adventure_version}"
   }
 }
