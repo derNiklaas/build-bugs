@@ -2,7 +2,7 @@
 > A simple utility to speed up (build-) bug reports.
 
 ### Requirements
-You need Minecraft 1.20.2 and [Noxesium 1.1.1](https://modrinth.com/mod/noxesium/version/1.1.1). 
+You need Minecraft 1.20.4 and at least [Noxesium 1.2](https://modrinth.com/mod/noxesium/version/1.2.0). 
 
 ### Usage
 
