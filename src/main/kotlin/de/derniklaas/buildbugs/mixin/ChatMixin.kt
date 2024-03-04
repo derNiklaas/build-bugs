@@ -1,7 +1,6 @@
 package de.derniklaas.buildbugs.mixin
 
 import de.derniklaas.buildbugs.BugCreator
-import de.derniklaas.buildbugs.BuildBugsClientEntrypoint
 import de.derniklaas.buildbugs.Constants
 import de.derniklaas.buildbugs.utils.Utils
 import net.minecraft.client.MinecraftClient
@@ -34,16 +33,5 @@ abstract class ChatMixin {
             }
 
         }
-    }
-
-    // Remove chat clear when switching servers when entering the reconfigure screen
-    @Inject(at = [At("HEAD")], method = ["Lnet/minecraft/class_338;method_1808(Z)V"], cancellable = true)
-    fun onClear(clearHistory: Boolean, info: CallbackInfo) {
-        // ignore if IslandUtils is present as it will also prevent the chat from being cleared
-        if (BuildBugsClientEntrypoint.hasIslandUtils) return
-        if (!Utils.isOnMCCServer()) return
-        if (!clearHistory) return
-
-        info.cancel()
     }
 }

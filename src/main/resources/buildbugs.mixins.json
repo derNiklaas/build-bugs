@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "ChatMixin",
+    "ClearChatOnDisconnectMixin",
     "InGameHudMixin",
     "NoxesiumMccGameStatePacketMixin",
     "NoxesiumMccServerPacketMixin"

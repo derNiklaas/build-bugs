@@ -16,8 +16,6 @@ class BuildBugsClientEntrypoint : ClientModInitializer {
         private const val MOD_ID = "build-bugs"
         val config = BuildBugsConfig.fromFile()
         val version: Version = FabricLoader.getInstance().getModContainer(MOD_ID).get().metadata.version
-        // id taken from https://github.com/AsoDesu/IslandUtils/blob/main/src/main/resources/fabric.mod.json
-        val hasIslandUtils = FabricLoader.getInstance().isModLoaded("islandutils")
     }
 
     override fun onInitializeClient() {

@@ -92,4 +92,12 @@ object BugCreator {
         clipboard.setClipboard(client.window.handle, text)
         Utils.sendMiniMessage("<i>Copied </i>${if (BuildBugsClientEntrypoint.config.debugMode) "<green>${text.trim()}</green> " else ""}<i>to clipboard.</i>")
     }
+
+    /**
+     * Resets the [gameState] to [ServerState.UNKNOWN].
+     */
+    fun resetGameState() {
+        gameState = ServerState.UNKNOWN
+        Utils.sendDebugMessage("Reset gameState.")
+    }
 }
