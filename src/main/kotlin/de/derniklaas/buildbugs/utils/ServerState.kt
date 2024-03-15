@@ -21,20 +21,16 @@ data class ServerState(
     /**
      * Returns the fancy name of the current location.
      *
-     * If it's a game lobby, it will return the game name and add "lobby" to it.
+     * If it's a game lobby, it will return the game name and add "Lobby" to it.
      * If it's not known, it will return the [type] and [subType]
      */
-    fun getFancyName() = when (type) {
+    fun getFancyName(type: String = this.type): String = when (type) {
         Constants.LOBBY -> "Lobby"
         // Game Lobbies
-        Constants.GAME_LOBBY -> when (subType) {
-            Constants.PARKOUR_WARRIOR -> "Parkour Warrior Lobby"
-            Constants.HOLE_IN_THE_WALL -> "HITW Lobby"
-            Constants.TO_GET_TO_THE_OTHER_SIDE -> "TGTTOS Lobby"
-            Constants.BATTLE_BOX -> "Battle Box Lobby"
-            Constants.SKY_BATTLE -> "Sky Battle Lobby"
-            Constants.DYNABALL -> "Dynaball Lobby"
-            else -> "$subType Lobby"
+        Constants.GAME_LOBBY -> {
+            // realistically this will never happen, but I don't want infinite recursion
+            if (subType == Constants.GAME_LOBBY) "Game Lobby?"
+            else "${getFancyName(subType)} Lobby"
         }
 
         // Game modes
