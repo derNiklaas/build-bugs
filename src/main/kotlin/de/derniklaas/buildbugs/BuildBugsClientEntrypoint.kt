@@ -1,5 +1,6 @@
 package de.derniklaas.buildbugs
 
+import de.derniklaas.buildbugs.utils.Utils
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
@@ -38,8 +39,12 @@ class BuildBugsClientEntrypoint : ClientModInitializer {
                 BugCreator.report()
             }
             if (bugreportKeybinding.wasPressed()) {
+                if(!Utils.isOnMCCServer()) {
+                    Utils.sendErrorMessage("You are not connected to a MCC related server.")
+                    return@register
+                }
                 val player = it.player ?: return@register
-                player.networkHandler.sendCommand("bugreport")
+                player.networkHandler.sendCommand("bugreport Generated using BuildBugs Mod - contact on discord: derniklaas")
             }
         }
     }
