@@ -25,12 +25,21 @@ class BuildBugsClientEntrypoint : ClientModInitializer {
                 "key.buildbugs.report", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_U, "category.buildbugs"
             )
         )
+        val bugreportKeybinding = KeyBindingHelper.registerKeyBinding(
+            KeyBinding(
+                "key.buildbugs.bugreport", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_I, "category.buildbugs"
+            )
+        )
 
         ClientCommandRegistrationCallback.EVENT.register(BuildBugsCommand::register)
 
         ClientTickEvents.END_CLIENT_TICK.register {
             if (reportKeybinding.wasPressed()) {
                 BugCreator.report()
+            }
+            if (bugreportKeybinding.wasPressed()) {
+                val player = it.player ?: return@register
+                player.networkHandler.sendCommand("bugreport")
             }
         }
     }

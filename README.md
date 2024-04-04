@@ -6,7 +6,8 @@ You need Minecraft 1.20.4 and at least [Noxesium 1.2](https://modrinth.com/mod/n
 
 ### Usage
 
-This mod adds the ``/buildbug`` command and a hotkey (default ``U``) to quickly gather information about your location.
+This mod adds the ``/buildbug`` command and two hotkeys, the first hotkey (default ``U``) is used to quickly gather information about your location. 
+The second hotkey (default ``I``) is used to quickly generate a /bugreport. 
 
 - ``/buildbug`` - Prints out location information, same as the hotkey.
 - ``/buildbug config clipboard <true/false>`` (default: ``false``) - If set to true, automatically copies any ``/bugreport`` links or ``/buildbug`` coordinates to the clipboard.
