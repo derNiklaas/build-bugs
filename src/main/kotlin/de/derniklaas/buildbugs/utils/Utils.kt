@@ -45,9 +45,14 @@ object Utils {
     /**
      * Checks if the player is connected to a MCC related server.
      */
-    fun isOnMCCServer(): Boolean {
+    fun isOnMCCServer() = isOnEventServer() || isOnIsland()
+
+    /**
+     * Checks if the player is connected to the server specified in the config.
+     */
+    fun isOnEventServer(): Boolean {
         val server = MinecraftClient.getInstance().currentServerEntry ?: return false
-        return isOnIsland() || server.address == BuildBugsClientEntrypoint.config.eventIP
+        return server.address == BuildBugsClientEntrypoint.config.eventIP
     }
 
     /**

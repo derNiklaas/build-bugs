@@ -19,14 +19,14 @@ abstract class NoxesiumMccGameStatePacketMixin {
         val packet = (this as Object) as ClientboundMccGameStatePacket
 
         // Set the map to Post Game during the Podium Phase
-        if(packet.stage == Constants.PODIUM_PHASE) {
+        if (packet.stage == Constants.PODIUM_PHASE) {
             BugCreator.updateMap("Post Game")
             return
         }
 
         // ignore parkour warrior updates, as they only contain "Parkour Warrior Survivor" or nothing
         // also ignore the podium phase as it overwrites the map part
-        if (BugCreator.gameState.type == Constants.PARKOUR_WARRIOR) {
+        if (BugCreator.gameState.type == Constants.PARKOUR_WARRIOR && Utils.isOnIsland()) {
             // Provide debug info
             Utils.sendDebugMessage("Blocked GameStatePacket: (name: <green>${packet.mapName}</green>, id: ${packet.mapId}, phase: ${packet.phaseType}, stage: ${packet.stage})")
 
