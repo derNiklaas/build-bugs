@@ -14,5 +14,4 @@ abstract class ClearChatOnDisconnectMixin {
     fun onDisconnect(info: CallbackInfo) {
         BugCreator.resetGameState()
     }
-
 }
