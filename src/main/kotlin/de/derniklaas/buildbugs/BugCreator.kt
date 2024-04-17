@@ -100,4 +100,12 @@ object BugCreator {
         gameState = ServerState.UNKNOWN
         Utils.sendDebugMessage("Reset gameState.")
     }
+
+    /**
+     * Forces the [gameState] to the given [type], [subType] and [map].
+     */
+    fun forceGameState(type: String, subType: String, map: String) {
+        gameState = ServerState(type, subType, map)
+        Utils.sendDebugMessage("Forced gameState to ${gameState.miniMessageString()}")
+    }
 }

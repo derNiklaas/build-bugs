@@ -64,7 +64,27 @@ object BuildBugsCommand {
                 Utils.sendErrorMessage("You can only reset the game state in debug mode.")
             }
             return@executes Command.SINGLE_SUCCESS
-        }).executes {
+        }).then(
+            literal<FabricClientCommandSource>("forcestate").then(
+                argument(
+                    "type", StringArgumentType.string()
+                ).then(
+                    argument("subtype", StringArgumentType.string()).then(argument(
+                        "map", StringArgumentType.string()
+                    ).executes {
+                        if (!BuildBugsClientEntrypoint.config.debugMode) {
+                            Utils.sendErrorMessage("You can only force the game state in debug mode.")
+                            return@executes Command.SINGLE_SUCCESS
+                        }
+                        val type = StringArgumentType.getString(it, "type")
+                        val subType = StringArgumentType.getString(it, "subtype")
+                        val map = StringArgumentType.getString(it, "map")
+                        BugCreator.forceGameState(type, subType, map)
+                        return@executes Command.SINGLE_SUCCESS
+                    })
+                )
+            )
+        ).executes {
             BugCreator.report()
             return@executes Command.SINGLE_SUCCESS
         })
