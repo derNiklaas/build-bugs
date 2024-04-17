@@ -10,6 +10,7 @@ object Constants {
     const val BATTLE_BOX = "battle-box"
     const val SKY_BATTLE = "sky-battle"
     const val DYNABALL = "dynaball"
+    const val ROCKET_SPLEEF_RUSH = "rocket-spleef"
 
     /* Parkour Warrior subtypes */
     const val PARKOUR_WARRIOR_DAILY = "daily"

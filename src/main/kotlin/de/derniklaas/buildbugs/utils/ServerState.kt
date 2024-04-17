@@ -40,6 +40,7 @@ data class ServerState(
         Constants.BATTLE_BOX -> "Battle Box"
         Constants.SKY_BATTLE -> "Sky Battle"
         Constants.DYNABALL -> "Dynaball"
+        Constants.ROCKET_SPLEEF_RUSH -> "Rocket Spleef"
 
         // Event gametypes
         "limbo" -> ""
