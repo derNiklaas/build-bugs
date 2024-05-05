@@ -43,6 +43,38 @@ object BuildBugsCommand {
                     return@executes Command.SINGLE_SUCCESS
                 })
             ).then(
+                literal<FabricClientCommandSource?>("log_incoming_packets").then(argument(
+                    "value",
+                    BoolArgumentType.bool()
+                ).executes {
+                    val value = BoolArgumentType.getBool(it, "value")
+                    BuildBugsClientEntrypoint.config.setLoggingForIncomingPackets(value)
+
+                    if (BuildBugsClientEntrypoint.config.logIncomingPackets) {
+                        Utils.sendMiniMessage("<green>Enabled</green> logging of incoming packets.")
+                    } else {
+                        Utils.sendMiniMessage("<red>Disabled</red> logging of incoming packets.")
+                    }
+
+                    return@executes Command.SINGLE_SUCCESS
+                })
+            ).then(
+                literal<FabricClientCommandSource?>("log_outgoing_packets").then(argument(
+                    "value",
+                    BoolArgumentType.bool()
+                ).executes {
+                    val value = BoolArgumentType.getBool(it, "value")
+                    BuildBugsClientEntrypoint.config.setLoggingForOutgoingPackets(value)
+
+                    if (BuildBugsClientEntrypoint.config.logOutgoingPackets) {
+                        Utils.sendMiniMessage("<green>Enabled</green> logging of outgoing packets.")
+                    } else {
+                        Utils.sendMiniMessage("<red>Disabled</red> logging of outgoing packets.")
+                    }
+
+                    return@executes Command.SINGLE_SUCCESS
+                })
+            ).then(
                 literal<FabricClientCommandSource?>("eventip").then(argument(
                     "value", StringArgumentType.string()
                 ).executes {

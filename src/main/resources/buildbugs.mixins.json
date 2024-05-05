@@ -6,6 +6,8 @@
   "mixins": [
     "ChatMixin",
     "ClearChatOnDisconnectMixin",
+    "ClientPlayNetworkingMixin",
+    "CustomPayloadS2CPacketMixin",
     "InGameHudMixin",
     "NoxesiumMccGameStatePacketMixin",
     "NoxesiumMccServerPacketMixin"
