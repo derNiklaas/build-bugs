@@ -11,20 +11,29 @@ import net.fabricmc.loader.api.FabricLoader
 
 @Serializable
 data class BuildBugsConfig(
-    var version: Int, var debugMode: Boolean, var copyToClipboard: Boolean, var eventIP: String
+    var version: Int = 3,
+    var debugMode: Boolean = false,
+    var copyToClipboard: Boolean = false,
+    var eventIP: String = "example.com",
+    var logIncomingPackets: Boolean = false,
+    var logOutgoingPackets: Boolean = false
 ) {
     companion object {
-        private val DEFAULT =
-            BuildBugsConfig(version = 2, debugMode = false, copyToClipboard = false, eventIP = "example.com")
+        private val DEFAULT = BuildBugsConfig()
         private val path = FabricLoader.getInstance().configDir.resolve("build-bugs.json")
+
+        private val json = Json {
+            encodeDefaults = true
+            coerceInputValues = true
+        }
 
         @OptIn(ExperimentalSerializationApi::class)
         fun fromFile(): BuildBugsConfig {
             if (path.toFile().exists()) {
                 try {
                     return FileInputStream(path.toFile()).use {
-                        Json.decodeFromStream<BuildBugsConfig>(it)
-                    }
+                        json.decodeFromStream<BuildBugsConfig>(it)
+                    }.also { it.version = DEFAULT.version }
                 } catch (ex: Exception) {
                     DEFAULT.saveConfig()
                     return fromFile()
@@ -62,13 +71,23 @@ data class BuildBugsConfig(
         saveConfig()
     }
 
+    fun setLoggingForIncomingPackets(newValue: Boolean) {
+        logIncomingPackets = newValue
+        saveConfig()
+    }
+
+    fun setLoggingForOutgoingPackets(newValue: Boolean) {
+        logOutgoingPackets = newValue
+        saveConfig()
+    }
+
     /**
      * Saves the config file to disk.
      */
     @OptIn(ExperimentalSerializationApi::class)
     private fun saveConfig() {
         FileOutputStream(path.toFile()).use {
-            Json.encodeToStream(this, it)
+            json.encodeToStream(this, it)
         }
     }
 }
