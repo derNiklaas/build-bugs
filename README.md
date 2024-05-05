@@ -18,8 +18,8 @@ The second hotkey (default ``I``) is used to quickly generate a /bugreport.
 - ``/buildbug config debug <true/false>`` (default: ``false``) - If set to true, prints out any incoming noxesium packet
   and information about the current internal state.
 - ``/buildbug config eventip <IP>`` (default:``example.com``) - Allows the mod to also function on the specified server.
-- ``/buildbug forcestate <type> <subtype> <map>`` - Forces the internal state of the mod.
-- ``/buildbug resetstate`` - Resets the internal state of the mod.
+- ``/buildbug force_state <type> <subtype> <map>`` - Forces the internal state of the mod.
+- ``/buildbug reset_state`` - Resets the internal state of the mod.
 - ``/buildbug version`` - Prints out the version of the mod.
 
 ![](images/example.png)
