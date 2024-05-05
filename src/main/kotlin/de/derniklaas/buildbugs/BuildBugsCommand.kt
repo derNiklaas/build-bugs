@@ -89,7 +89,7 @@ object BuildBugsCommand {
         ).then(literal<FabricClientCommandSource>("version").executes {
             Utils.sendSuccessMessage("Running BuildBugs ${BuildBugsClientEntrypoint.version}!")
             return@executes Command.SINGLE_SUCCESS
-        }).then(literal<FabricClientCommandSource>("resetstate").executes {
+        }).then(literal<FabricClientCommandSource>("reset_state").executes {
             if (BuildBugsClientEntrypoint.config.debugMode) {
                 BugCreator.resetGameState()
             } else {
@@ -97,7 +97,7 @@ object BuildBugsCommand {
             }
             return@executes Command.SINGLE_SUCCESS
         }).then(
-            literal<FabricClientCommandSource>("forcestate").then(
+            literal<FabricClientCommandSource>("force_state").then(
                 argument(
                     "type", StringArgumentType.string()
                 ).then(
