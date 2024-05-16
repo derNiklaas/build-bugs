@@ -29,7 +29,7 @@ abstract class InGameHudMixin {
         // Ignore non MCC Servers
         if (!Utils.isOnMCCServer()) return
         // Only check titles in Parkour Warrior
-        if (BugCreator.gameState.type != Constants.PARKOUR_WARRIOR) return
+        if (BugCreator.gameState.serverType != Constants.PARKOUR_WARRIOR) return
 
         // Check if the first element matches the regex defined above
         val start = title.content.toString()

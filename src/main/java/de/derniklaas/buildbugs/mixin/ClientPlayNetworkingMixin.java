@@ -10,12 +10,16 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(ClientPlayNetworking.class)
+// Temporarily disable logging of packets as networking has changed
+
+//@Mixin(ClientPlayNetworking.class)
 public class ClientPlayNetworkingMixin {
+    /*
     @Inject(at = @At("HEAD"), method = "send(Lnet/minecraft/util/Identifier;Lnet/minecraft/network/PacketByteBuf;)V")
     private static void onReceive(Identifier channelName, PacketByteBuf buffer, CallbackInfo ci) {
         if (!BuildBugsClientEntrypoint.Companion.getConfig().getLogOutgoingPackets()) return;
 
         Utils.INSTANCE.sendDebugMessage("OUTBOUND: " + channelName + " -> " + buffer.readableBytes() + " bytes", true);
     }
+    */
 }

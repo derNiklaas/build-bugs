@@ -20,6 +20,7 @@ class BuildBugsClientEntrypoint : ClientModInitializer {
     }
 
     override fun onInitializeClient() {
+        NoxesiumPacketHandler()
         BuildBugsConfig.createDefaultConfig()
         val reportKeybinding = KeyBindingHelper.registerKeyBinding(
             KeyBinding(
@@ -39,7 +40,7 @@ class BuildBugsClientEntrypoint : ClientModInitializer {
                 BugCreator.report()
             }
             if (bugreportKeybinding.wasPressed()) {
-                if(!Utils.isOnMCCServer()) {
+                if (!Utils.isOnMCCServer()) {
                     Utils.sendErrorMessage("You are not connected to a MCC related server.")
                     return@register
                 }

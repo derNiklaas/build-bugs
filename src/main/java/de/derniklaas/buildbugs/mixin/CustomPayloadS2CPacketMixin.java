@@ -11,12 +11,16 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(CustomPayloadS2CPacket.class)
+// Temporarily disable logging of packets as networking has changed
+
+//@Mixin(CustomPayloadS2CPacket.class)
 public class CustomPayloadS2CPacketMixin {
+    /*
     @Inject(at = @At("HEAD"), method = "readPayload")
     private static void onReceive(Identifier id, PacketByteBuf buffer, CallbackInfoReturnable<CustomPayload> cir) {
         if (!BuildBugsClientEntrypoint.Companion.getConfig().getLogIncomingPackets()) return;
 
         Utils.INSTANCE.sendDebugMessage("INBOUND: " + id + " -> " + buffer.readableBytes() + " bytes", true);
     }
+    */
 }

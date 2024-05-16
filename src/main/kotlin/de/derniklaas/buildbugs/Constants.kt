@@ -3,7 +3,6 @@ package de.derniklaas.buildbugs
 object Constants {
     /* Game types */
     const val LOBBY = "lobby"
-    const val GAME_LOBBY = "lobby-game"
     const val PARKOUR_WARRIOR = "parkour-warrior"
     const val HOLE_IN_THE_WALL = "hitw"
     const val TO_GET_TO_THE_OTHER_SIDE = "tgttos"
@@ -39,5 +38,5 @@ object Constants {
     const val BUG_REPORT_URL = "https://p.nox.gs/"
 
     /* Groups */
-    val LOBBIES = listOf(LOBBY, GAME_LOBBY, HUB, LIMBO)
+    val LOBBIES = listOf(LOBBY, HUB, LIMBO)
 }

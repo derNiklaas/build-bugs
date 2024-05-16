@@ -4,14 +4,14 @@ import com.noxcrew.noxesium.network.clientbound.ClientboundMccServerPacket
 import de.derniklaas.buildbugs.Constants
 
 data class ServerState(
-    val type: String, val subType: String, val mapName: String
+    val serverType: String, val subType: String, val mapName: String
 ) {
     companion object {
         val UNKNOWN = ServerState("Unknown", "Unknown", "Unknown")
 
         fun fromPacket(packet: ClientboundMccServerPacket): ServerState {
             return ServerState(
-                packet.type, packet.subType, if (packet.type in Constants.LOBBIES) "" else "Pre Game"
+                packet.serverType, packet.subType, if (packet.serverType in Constants.LOBBIES) "" else "Pre Game"
             )
         }
     }
@@ -22,14 +22,8 @@ data class ServerState(
      * If it's a game lobby, it will return the game name and add "Lobby" to it.
      * If it's not known, it will return the [type] and [subType]
      */
-    fun getFancyName(type: String = this.type): String = when (type) {
+    fun getFancyName(type: String = this.serverType): String = when (type) {
         Constants.LOBBY -> "Lobby"
-        // Game Lobbies
-        Constants.GAME_LOBBY -> {
-            // realistically this will never happen, but I don't want infinite recursion
-            if (subType == Constants.GAME_LOBBY) "Game Lobby?"
-            else "${getFancyName(subType)} Lobby"
-        }
 
         // Game modes
         Constants.PARKOUR_WARRIOR -> "Parkour Warrior"
@@ -50,7 +44,7 @@ data class ServerState(
         Constants.RAILROAD_RUSH -> "Railroad Rush"
         Constants.BUILD_MART -> "Build Mart"
         // Empty because map is already set to the name of the game
-        Constants.SANDS_OF_TIME, Constants.MELTDOWN, Constants.DODGEBOLT, Constants.LIMBO, UNKNOWN.type -> ""
+        Constants.SANDS_OF_TIME, Constants.MELTDOWN, Constants.DODGEBOLT, Constants.LIMBO, UNKNOWN.serverType -> ""
 
         else -> "$type $subType"
     }
@@ -61,6 +55,6 @@ data class ServerState(
     fun withMapName(name: String) = copy(mapName = name)
 
     fun miniMessageString(): String {
-        return "type: <green>$type</green>, subType: <green>$subType</green>, map: <green>$mapName</green>"
+        return "type: <green>$serverType</green>, subType: <green>$subType</green>, map: <green>$mapName</green>"
     }
 }
