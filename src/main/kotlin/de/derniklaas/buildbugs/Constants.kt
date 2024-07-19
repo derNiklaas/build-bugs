@@ -42,4 +42,25 @@ object Constants {
 
     /* Groups */
     val LOBBIES = listOf(LOBBY, HUB, LIMBO)
+    val GAMES = listOf(
+        ACE_RACE,
+        RAILROAD_RUSH,
+        SANDS_OF_TIME,
+        SURVIVAL_GAMES,
+        PARKOUR_TAG,
+        MELTDOWN,
+        GRID_RUNNERS,
+        BINGO_BUT_FAST,
+        BUILD_MART,
+        HOLE_IN_THE_WALL,
+        HOLE_IN_THE_WALL_EVENT,
+        DODGEBOLT,
+        TO_GET_TO_THE_OTHER_SIDE,
+        BATTLE_BOX,
+        PARKOUR_WARRIOR,
+        SKY_BATTLE,
+        DYNABALL,
+        ROCKET_SPLEEF_RUSH
+    )
+    val ALL_TYPES = LOBBIES + GAMES
 }
