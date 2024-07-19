@@ -39,6 +39,10 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_api_version")}")
     modCompileOnly("maven.modrinth:noxesium:${property("noxesium_version")}")
     modImplementation(include("net.kyori:adventure-platform-fabric:${property("adventure_version")}")!!)
+    modImplementation(include("org.incendo:cloud-fabric:${property("cloud_version")}")!!)
+    modImplementation(include("org.incendo:cloud-annotations:2.0.0-rc.2")!!)
+    modImplementation(include("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0-rc.2")!!)
+    modImplementation(include("org.incendo:cloud-kotlin-extensions:2.0.0-rc.2")!!)
 }
 
 tasks {
