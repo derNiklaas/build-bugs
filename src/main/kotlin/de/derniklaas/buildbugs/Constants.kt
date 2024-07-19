@@ -37,6 +37,9 @@ object Constants {
     /* URLs */
     const val BUG_REPORT_URL = "https://p.nox.gs/"
 
+    /* Misc */
+    const val UNKNOWN = "Unknown"
+
     /* Groups */
     val LOBBIES = listOf(LOBBY, HUB, LIMBO)
 }

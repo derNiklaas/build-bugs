@@ -7,7 +7,7 @@ data class ServerState(
     val serverType: String, val subType: String, val mapName: String
 ) {
     companion object {
-        val UNKNOWN = ServerState("Unknown", "Unknown", "Unknown")
+        val UNKNOWN = ServerState(Constants.UNKNOWN, Constants.UNKNOWN, Constants.UNKNOWN)
 
         fun fromPacket(packet: ClientboundMccServerPacket): ServerState {
             return ServerState(
@@ -44,7 +44,7 @@ data class ServerState(
         Constants.RAILROAD_RUSH -> "Railroad Rush"
         Constants.BUILD_MART -> "Build Mart"
         // Empty because map is already set to the name of the game
-        Constants.SANDS_OF_TIME, Constants.MELTDOWN, Constants.DODGEBOLT, Constants.LIMBO, UNKNOWN.serverType -> ""
+        Constants.SANDS_OF_TIME, Constants.MELTDOWN, Constants.DODGEBOLT, Constants.LIMBO, Constants.UNKNOWN -> ""
 
         else -> "$type $subType"
     }

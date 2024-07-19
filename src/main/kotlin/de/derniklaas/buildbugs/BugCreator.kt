@@ -75,7 +75,7 @@ object BugCreator {
     private fun getCopyMessage(area: String, map: String, position: BlockPos, discord: Boolean = false): String {
         val start = if (area.isNotBlank()) "$area, " else ""
         val codeBlock = if (!discord) "" else "`"
-        return "[$start${if (map.isNotBlank() && map != ServerState.UNKNOWN.mapName) map else "$codeBlock${position.x} ${position.y} ${position.z}$codeBlock"}] "
+        return "[$start${if (map.isNotBlank() && map != Constants.UNKNOWN) map else "$codeBlock${position.x} ${position.y} ${position.z}$codeBlock"}] "
     }
 
     /**
