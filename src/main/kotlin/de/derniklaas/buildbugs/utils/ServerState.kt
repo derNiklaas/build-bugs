@@ -23,7 +23,11 @@ data class ServerState(
      * If it's not known, it will return the [type] and [subType]
      */
     fun getFancyName(type: String = this.serverType): String = when (type) {
-        Constants.LOBBY -> "Lobby"
+        Constants.LOBBY -> {
+            if (subType == "main") "Main Lobby"
+            else if (type == subType) "Lobby Lobby?"
+            else "${getFancyName(subType)} Lobby"
+        }
 
         // Game modes
         Constants.PARKOUR_WARRIOR -> "Parkour Warrior"
@@ -34,7 +38,7 @@ data class ServerState(
         Constants.DYNABALL -> "Dynaball"
         Constants.ROCKET_SPLEEF_RUSH -> "Rocket Spleef"
 
-        // Event gametypes
+        // Event game types
         Constants.HUB -> "Hub"
         Constants.ACE_RACE -> "Ace Race"
         Constants.PARKOUR_TAG -> "Parkour Tag"
