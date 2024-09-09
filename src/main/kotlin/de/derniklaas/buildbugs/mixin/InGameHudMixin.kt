@@ -22,7 +22,7 @@ abstract class InGameHudMixin {
      * "[F-1] [name]" - Finale in PKW Survivor
      */
 
-    private val leapRegex = """\[[M|B|S|F]\d?-\d]""".toRegex()
+    private val leapRegex = """\[[MBSF]\d?-\d]""".toRegex()
 
     @Inject(at = [At("TAIL")], method = ["Lnet/minecraft/class_329;method_34002(Lnet/minecraft/class_2561;)V"])
     fun setSubTitle(title: Text, info: CallbackInfo) {
