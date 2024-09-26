@@ -8,10 +8,10 @@ import de.derniklaas.buildbugs.utils.Utils
 class NoxesiumPacketHandler {
 
     init {
-        NoxesiumPackets.MCC_SERVER.addListener(this) { _, packet, _ ->
+        NoxesiumPackets.CLIENT_MCC_SERVER.addListener(this) { _, packet, _ ->
             onServerPacket(packet)
         }
-        NoxesiumPackets.MCC_GAME_STATE.addListener(this) { _, packet, _ ->
+        NoxesiumPackets.CLIENT_MCC_GAME_STATE.addListener(this) { _, packet, _ ->
             onStatePacket(packet)
         }
     }
