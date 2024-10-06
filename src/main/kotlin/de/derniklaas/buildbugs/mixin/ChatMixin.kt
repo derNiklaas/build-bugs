@@ -3,7 +3,6 @@ package de.derniklaas.buildbugs.mixin
 import de.derniklaas.buildbugs.BugCreator
 import de.derniklaas.buildbugs.Constants
 import de.derniklaas.buildbugs.utils.Utils
-import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.hud.ChatHud
 import net.minecraft.text.ClickEvent
 import net.minecraft.text.Text
@@ -22,16 +21,15 @@ abstract class ChatMixin {
 
         message.style.clickEvent?.let {
             if (it.action == ClickEvent.Action.COPY_TO_CLIPBOARD && it.value.startsWith(Constants.BUG_REPORT_URL)) {
-                BugCreator.setClipboard(MinecraftClient.getInstance(), it.value)
+                BugCreator.setClipboard(it.value)
             }
         }
         message.siblings.forEach {
             it.style.clickEvent?.let { event ->
                 if (event.action == ClickEvent.Action.COPY_TO_CLIPBOARD && event.value.startsWith(Constants.BUG_REPORT_URL)) {
-                    BugCreator.setClipboard(MinecraftClient.getInstance(), event.value)
+                    BugCreator.setClipboard(event.value)
                 }
             }
-
         }
     }
 }

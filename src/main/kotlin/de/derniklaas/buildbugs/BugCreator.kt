@@ -50,7 +50,7 @@ object BugCreator {
         )
 
         if (BuildBugsClientEntrypoint.config.copyToClipboard) {
-            setClipboard(client, discordMessage)
+            setClipboard(discordMessage)
         }
     }
 
@@ -88,8 +88,8 @@ object BugCreator {
     /**
      * Sets the content of the Clipboard to [text].
      */
-    fun setClipboard(client: MinecraftClient, text: String) {
-        clipboard.setClipboard(client.window.handle, text)
+    fun setClipboard(text: String) {
+        clipboard.setClipboard(MinecraftClient.getInstance().window.handle, text)
         Utils.sendMiniMessage("<i>Copied </i>${if (BuildBugsClientEntrypoint.config.debugMode) "<green>${text.trim()}</green> " else ""}<i>to clipboard.</i>")
     }
 
