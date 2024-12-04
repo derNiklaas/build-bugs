@@ -12,6 +12,22 @@ object Constants {
     const val ROCKET_SPLEEF_RUSH = "rocket-spleef"
     const val LIMBO = "limbo"
 
+    /* Fishing Islands & Grottos */
+    const val VERDANT_WOODS = "temperate_1"
+    const val FLORAL_FOREST = "temperate_2"
+    const val DARK_GROVE = "temperate_3"
+    const val SUNKEN_SWAMP = "temperate_grotto"
+
+    const val TROPICAL_OVERGROWTH = "tropical_1"
+    const val CORAL_SHORES = "tropical_2"
+    const val TWISTED_SWAMP = "tropical_3"
+    const val MIRRORED_OASIS = "tropical_grotto"
+
+    const val ANCIENT_SANDS = "barren_1"
+    const val BLAZING_CANYON = "barren_2"
+    const val ASHEN_WASTES = "barren_3"
+    const val VOLCANIC_SPRINGS = "barren_grotto"
+
     /* Event Types */
     const val HUB = "hub"
     const val ACE_RACE = "ace-race"

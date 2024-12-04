@@ -3,7 +3,6 @@ package de.derniklaas.buildbugs.mixin
 import de.derniklaas.buildbugs.BugCreator
 import de.derniklaas.buildbugs.Constants
 import de.derniklaas.buildbugs.utils.Utils
-import java.util.Optional
 import net.minecraft.client.gui.hud.InGameHud
 import net.minecraft.text.Text
 import org.spongepowered.asm.mixin.Mixin
@@ -31,11 +30,11 @@ abstract class InGameHudMixin {
         // Only check titles in Parkour Warrior
         if (BugCreator.gameState.serverType != Constants.PARKOUR_WARRIOR) return
 
-        // Check if the first element matches the regex defined above
-        val start = title.content.toString()
-        if (!leapRegex.containsMatchIn(start)) return
+        val courseTitle = title.asTruncatedString(Int.MAX_VALUE)
+        if (!leapRegex.containsMatchIn(courseTitle)) return
 
-        val name = title.siblings.first().content.visit { Optional.of(it) }.get()
+        // Extract the name from the title
+        val name = courseTitle.split("] ")[1]
 
         Utils.sendDebugMessage("Found course segment <green>$name</green>.")
         BugCreator.updateMap(name)

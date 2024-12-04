@@ -24,9 +24,23 @@ data class ServerState(
      */
     fun getFancyName(type: String = this.serverType): String = when (type) {
         Constants.LOBBY -> {
-            if (subType == "main") "Main Lobby"
-            else if (type == subType) "Lobby Lobby?"
-            else "${getFancyName(subType)} Lobby"
+            if(type == this.subType) "Lobby Lobby?"
+            when(subType) {
+                "main" -> "Main Lobby"
+                Constants.VERDANT_WOODS -> "Verdant Woods"
+                Constants.FLORAL_FOREST -> "Floral Forest"
+                Constants.DARK_GROVE -> "Dark Grove"
+                Constants.SUNKEN_SWAMP -> "Sunken Swamp"
+                Constants.TROPICAL_OVERGROWTH -> "Tropical Overgrowth"
+                Constants.CORAL_SHORES -> "Coral Shores"
+                Constants.TWISTED_SWAMP -> "Twisted Swamp"
+                Constants.MIRRORED_OASIS -> "Mirrored Oasis"
+                Constants.ANCIENT_SANDS -> "Ancient Sands"
+                Constants.BLAZING_CANYON -> "Blazing Canyon"
+                Constants.ASHEN_WASTES -> "Ashen Wastes"
+                Constants.VOLCANIC_SPRINGS -> "Volcanic Springs"
+                else -> "${getFancyName(subType)} Lobby"
+            }
         }
 
         // Game modes
