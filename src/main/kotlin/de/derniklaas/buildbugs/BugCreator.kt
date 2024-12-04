@@ -5,7 +5,9 @@ import de.derniklaas.buildbugs.utils.ServerState
 import de.derniklaas.buildbugs.utils.Utils
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.util.Clipboard
+import net.minecraft.entity.decoration.DisplayEntity
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Box
 
 object BugCreator {
 
@@ -43,8 +45,7 @@ object BugCreator {
         Utils.sendMiniMessage(
             "<click:copy_to_clipboard:'${
                 discordMessage.replace(
-                    "'",
-                    "\\\'"
+                    "'", "\\\'"
                 )
             }'>$minecraftMessage <yellow><bold>[CLICK TO COPY]</bold></yellow></click>", true
         )
@@ -52,6 +53,67 @@ object BugCreator {
         if (BuildBugsClientEntrypoint.config.copyToClipboard) {
             setClipboard(discordMessage)
         }
+    }
+
+    fun shareFishingSpot() {
+        val client = MinecraftClient.getInstance()
+        val server = client.currentServerEntry ?: return
+        val player = client.player ?: return
+
+        // Check if the player is connected to a server
+        if (server.isLocal) {
+            Utils.sendErrorMessage("You are not connected to a server.")
+            return
+        }
+
+        // Check if the player is connected to a MCC related server
+        if (!Utils.isOnMCCServer()) {
+            Utils.sendErrorMessage("You are not connected to a MCC related server.")
+            return
+        }
+
+        // Get the "area" of the player
+        val area = gameState.getFancyName()
+        val blockPos = player.blockPos
+        val map = gameState.mapName
+
+        val box = Box.of(blockPos.toCenterPos(), 12.0, 12.0, 12.0)
+        val entities = player.world.getOtherEntities(null, box) { entity ->
+            entity is DisplayEntity.TextDisplayEntity
+        }
+
+        if (entities.isNotEmpty()) {
+            val textDisplay = entities.first() as DisplayEntity.TextDisplayEntity
+            val text = textDisplay.data!!.text.asTruncatedString(Int.MAX_VALUE)
+            // Utils.sendDebugMessage("Found text display entity with text: <green>$text</green>.")
+            /*
+
+            Fishing Spot
+
+            Stock: Plentiful
+            Catch Time: Fast
+            î‚»+10% Wise Hook
+            î‚¦+20% Fish Magnet
+
+             */
+
+            val perks = text.split("\n").filter { it.contains("+") }.map { "+" + it.split("+")[1] }.joinToString(", ")
+            if (perks.isNotEmpty()) {
+                val minecraftMessage = getCopyMessage(area, map, blockPos).trim() + " $perks"
+                Utils.sendMiniMessage(
+                    "<click:copy_to_clipboard:'${
+                        minecraftMessage.replace(
+                            "'", "\\\'"
+                        )
+                    }'>$minecraftMessage <yellow><bold>[CLICK TO COPY]</bold></yellow></click>", true
+                )
+                if (BuildBugsClientEntrypoint.config.copyToClipboard) {
+                    setClipboard(minecraftMessage)
+                }
+                return
+            }
+        }
+        Utils.sendErrorMessage("Could not find a fishing spot.")
     }
 
     /**

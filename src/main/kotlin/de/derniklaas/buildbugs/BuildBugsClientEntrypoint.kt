@@ -40,9 +40,21 @@ class BuildBugsClientEntrypoint : ClientModInitializer {
             )
         )
 
+        val shareFishingSpotKeybinding = KeyBindingHelper.registerKeyBinding(
+            KeyBinding(
+                "key.buildbugs.share_fishing_spot",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_J,
+                "category.buildbugs"
+            )
+        )
+
         ClientTickEvents.END_CLIENT_TICK.register {
             if (reportKeybinding.wasPressed()) {
                 BugCreator.report()
+            }
+            if (shareFishingSpotKeybinding.wasPressed()) {
+                BugCreator.shareFishingSpot()
             }
             if (bugreportKeybinding.wasPressed()) {
                 if (!Utils.isOnMCCServer()) {
