@@ -85,17 +85,6 @@ object BugCreator {
         if (entities.isNotEmpty()) {
             val textDisplay = entities.first() as DisplayEntity.TextDisplayEntity
             val text = textDisplay.data!!.text.asTruncatedString(Int.MAX_VALUE)
-            // Utils.sendDebugMessage("Found text display entity with text: <green>$text</green>.")
-            /*
-
-            Fishing Spot
-
-            Stock: Plentiful
-            Catch Time: Fast
-            î‚»+10% Wise Hook
-            î‚¦+20% Fish Magnet
-
-             */
 
             val perks = text.split("\n").filter { it.contains("+") }.map { "+" + it.split("+")[1] }.joinToString(", ")
             if (perks.isNotEmpty()) {
