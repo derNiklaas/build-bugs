@@ -74,10 +74,16 @@ object BugCreator {
 
         // Get the "area" of the player
         val area = gameState.getFancyName()
-        val blockPos = player.blockPos
         val map = gameState.mapName
 
-        val box = Box.of(blockPos.toCenterPos(), 12.0, 12.0, 12.0)
+        val fishHook = player.fishHook
+        if (fishHook == null) {
+            Utils.sendErrorMessage("You are not fishing.")
+            return
+        }
+        val blockPos = fishHook.blockPos
+
+        val box = Box.of(blockPos.toCenterPos(), 6.0, 6.0, 6.0)
         val entities = player.world.getOtherEntities(null, box) { entity ->
             entity is DisplayEntity.TextDisplayEntity
         }
