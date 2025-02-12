@@ -1,5 +1,6 @@
 package de.derniklaas.buildbugs
 
+import com.noxcrew.noxesium.NoxesiumFabricMod
 import de.derniklaas.buildbugs.utils.Utils
 import io.leangen.geantyref.TypeToken
 import net.fabricmc.api.ClientModInitializer
@@ -24,6 +25,7 @@ class BuildBugsClientEntrypoint : ClientModInitializer {
     }
 
     override fun onInitializeClient() {
+        NoxesiumFabricMod.initialize()
         NoxesiumPacketHandler()
         val manager = FabricClientCommandManager.createNative(ExecutionCoordinator.asyncCoordinator())
         val annotationParser = AnnotationParser(manager, TypeToken.get(FabricClientCommandSource::class.java))
