@@ -3,26 +3,26 @@ package de.derniklaas.buildbugs
 import com.noxcrew.noxesium.network.clientbound.ClientboundMccServerPacket
 import de.derniklaas.buildbugs.utils.ServerState
 import de.derniklaas.buildbugs.utils.Utils
-import net.minecraft.client.MinecraftClient
-import net.minecraft.client.util.Clipboard
-import net.minecraft.util.math.BlockPos
+import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.font.TextFieldHelper
+import net.minecraft.client.multiplayer.ServerData
+import net.minecraft.core.BlockPos
 
 object BugCreator {
 
     var gameState: ServerState = ServerState.UNKNOWN
         private set
-    private val clipboard: Clipboard = Clipboard()
 
     /**
      * Gathers information to more easily create a build bug report.
      */
     fun report() {
-        val client = MinecraftClient.getInstance()
-        val server = client.currentServerEntry ?: return
+        val client = Minecraft.getInstance()
+        val server = client.currentServer ?: return
         val player = client.player ?: return
 
         // Check if the player is connected to a server
-        if (server.isLocal) {
+        if (server.type() == ServerData.Type.LAN) {
             Utils.sendErrorMessage("You are not connected to a server.")
             return
         }
@@ -35,7 +35,7 @@ object BugCreator {
 
         // Get the "area" of the player
         val area = gameState.getFancyName()
-        val blockPos = player.blockPos
+        val blockPos = player.blockPosition()
         val map = gameState.mapName
 
         val minecraftMessage = getCopyMessage(area, map, blockPos).trim()
@@ -88,7 +88,7 @@ object BugCreator {
      * Sets the content of the Clipboard to [text].
      */
     fun setClipboard(text: String) {
-        clipboard.setClipboard(MinecraftClient.getInstance().window.handle, text)
+        TextFieldHelper.setClipboardContents(Minecraft.getInstance(), text)
         Utils.sendMiniMessage("<i>Copied </i>${if (BuildBugsClientEntrypoint.config.debugMode) "<green>${text.trim()}</green> " else ""}<i>to clipboard.</i>")
     }
 
