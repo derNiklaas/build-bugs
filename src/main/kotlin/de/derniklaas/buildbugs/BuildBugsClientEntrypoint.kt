@@ -1,5 +1,7 @@
 package de.derniklaas.buildbugs
 
+import com.mojang.blaze3d.platform.InputConstants
+import com.noxcrew.noxesium.NoxesiumFabricMod
 import de.derniklaas.buildbugs.utils.Utils
 import io.leangen.geantyref.TypeToken
 import net.fabricmc.api.ClientModInitializer
@@ -8,8 +10,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.loader.api.FabricLoader
 import net.fabricmc.loader.api.Version
-import net.minecraft.client.option.KeyBinding
-import net.minecraft.client.util.InputUtil
+import net.minecraft.client.KeyMapping
 import org.incendo.cloud.annotations.AnnotationParser
 import org.incendo.cloud.execution.ExecutionCoordinator
 import org.incendo.cloud.fabric.FabricClientCommandManager
@@ -24,45 +25,46 @@ class BuildBugsClientEntrypoint : ClientModInitializer {
     }
 
     override fun onInitializeClient() {
+        NoxesiumFabricMod.initialize()
         NoxesiumPacketHandler()
         val manager = FabricClientCommandManager.createNative(ExecutionCoordinator.asyncCoordinator())
         val annotationParser = AnnotationParser(manager, TypeToken.get(FabricClientCommandSource::class.java))
         annotationParser.parse(BuildBugsCommand())
         BuildBugsConfig.createDefaultConfig()
         val reportKeybinding = KeyBindingHelper.registerKeyBinding(
-            KeyBinding(
-                "key.buildbugs.report", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_U, "category.buildbugs"
+            KeyMapping(
+                "key.buildbugs.report", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_U, "category.buildbugs"
             )
         )
         val bugreportKeybinding = KeyBindingHelper.registerKeyBinding(
-            KeyBinding(
-                "key.buildbugs.bugreport", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_I, "category.buildbugs"
+            KeyMapping(
+                "key.buildbugs.bugreport", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_I, "category.buildbugs"
             )
         )
 
-        val shareFishingSpotKeybinding = KeyBindingHelper.registerKeyBinding(
-            KeyBinding(
-                "key.buildbugs.share_fishing_spot",
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_J,
-                "category.buildbugs"
-            )
-        )
+        // ensure only executed once
+        var clickedReportKeybind = false
+        var clickedBugreportKeybind = false
 
         ClientTickEvents.END_CLIENT_TICK.register {
-            if (reportKeybinding.wasPressed()) {
+            if (reportKeybinding.isDown) {
+                if (clickedReportKeybind) return@register
+                clickedReportKeybind = true
                 BugCreator.report()
+            } else if (clickedReportKeybind) {
+                clickedReportKeybind = false
             }
-            if (shareFishingSpotKeybinding.wasPressed()) {
-                BugCreator.shareFishingSpot()
-            }
-            if (bugreportKeybinding.wasPressed()) {
+            if (bugreportKeybinding.isDown) {
+                if (clickedBugreportKeybind) return@register
+                clickedBugreportKeybind = true
                 if (!Utils.isOnMCCServer()) {
                     Utils.sendErrorMessage("You are not connected to a MCC related server.")
                     return@register
                 }
                 val player = it.player ?: return@register
-                player.networkHandler.sendCommand("bugreport Generated using BuildBugs Mod - contact on discord: derniklaas")
+                player.connection.sendCommand("bugreport Generated using BuildBugs Mod - contact on discord: derniklaas")
+            } else if (clickedBugreportKeybind) {
+                clickedBugreportKeybind = false
             }
         }
     }

@@ -14,9 +14,7 @@ data class BuildBugsConfig(
     var version: Int = 3,
     var debugMode: Boolean = false,
     var copyToClipboard: Boolean = false,
-    var eventIP: String = "example.com",
-    var logIncomingPackets: Boolean = false,
-    var logOutgoingPackets: Boolean = false
+    var eventIP: String = "example.com"
 ) {
     companion object {
         private val DEFAULT = BuildBugsConfig()
@@ -68,16 +66,6 @@ data class BuildBugsConfig(
 
     fun setEventAddress(newValue: String) {
         eventIP = newValue
-        saveConfig()
-    }
-
-    fun setLoggingForIncomingPackets(newValue: Boolean) {
-        logIncomingPackets = newValue
-        saveConfig()
-    }
-
-    fun setLoggingForOutgoingPackets(newValue: Boolean) {
-        logOutgoingPackets = newValue
         saveConfig()
     }
 

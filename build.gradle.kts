@@ -3,7 +3,7 @@ plugins {
     id("fabric-loom")
     `maven-publish`
     java
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.6.21"
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.0.21"
 }
 
 group = property("maven_group")!!
@@ -27,22 +27,26 @@ repositories {
             includeGroup("maven.modrinth")
         }
     }
+
+    maven("https://maven.noxcrew.com/public")
+    maven("https://maven.enginehub.org/repo/")
+    maven("https://maven.terraformersmc.com/")
 }
 
 dependencies {
     minecraft("com.mojang:minecraft:${property("minecraft_version")}")
-    mappings("net.fabricmc:yarn:${property("yarn_mappings")}:v2")
+    mappings(loom.officialMojangMappings())
     modImplementation("net.fabricmc:fabric-loader:${property("loader_version")}")
 
-    include(modImplementation("net.fabricmc:fabric-language-kotlin:${property("fabric_kotlin_version")}")!!)
-    include(implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")!!)
+    modImplementation("net.fabricmc:fabric-language-kotlin:${property("fabric_kotlin_version")}")!!
+    include(implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")!!)
     modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_api_version")}")
-    modCompileOnly("maven.modrinth:noxesium:${property("noxesium_version")}")
+    modCompileOnly("com.noxcrew.noxesium:fabric:${property("noxesium_version")}")
     modImplementation(include("net.kyori:adventure-platform-fabric:${property("adventure_version")}")!!)
     modImplementation(include("org.incendo:cloud-fabric:${property("cloud_version")}")!!)
-    modImplementation(include("org.incendo:cloud-annotations:2.0.0-rc.2")!!)
-    modImplementation(include("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0-rc.2")!!)
-    modImplementation(include("org.incendo:cloud-kotlin-extensions:2.0.0-rc.2")!!)
+    modImplementation(include("org.incendo:cloud-annotations:2.0.0")!!)
+    modImplementation(include("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0")!!)
+    modImplementation(include("org.incendo:cloud-kotlin-extensions:2.0.0")!!)
 }
 
 tasks {

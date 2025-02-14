@@ -4,14 +4,13 @@
 
 ### Requirements
 
-You need Minecraft 1.21.1 and at least [Noxesium 2.3.1](https://modrinth.com/mod/noxesium/version/2.3.1).
+You need Minecraft 1.21.4 and at least [Noxesium 2.5.0](https://modrinth.com/mod/noxesium/version/2.5.0).
 
 ### Usage
 
-This mod adds the ``/buildbug`` command and three hotkeys, the first hotkey (default ``U``) is used to quickly gather
+This mod adds the ``/buildbug`` command and two hotkeys, the first hotkey (default ``U``) is used to quickly gather
 information about your location.
 The second hotkey (default ``I``) is used to quickly generate a /bugreport.
-The third hotkey (default ``J``) is used to copy a fishing spot (including its perks) to the clipboard.
 
 - ``/buildbug`` - Prints out location information, same as the hotkey.
 - ``/buildbug config clipboard <true/false>`` (default: ``false``) - If set to true, automatically copies

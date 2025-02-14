@@ -3,7 +3,7 @@ package de.derniklaas.buildbugs.utils
 import de.derniklaas.buildbugs.BuildBugsClientEntrypoint
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
-import net.minecraft.client.MinecraftClient
+import net.minecraft.client.Minecraft
 
 object Utils {
 
@@ -12,7 +12,7 @@ object Utils {
      * See https://docs.advntr.dev/minimessage/format.html for the specs.
      */
     fun sendMiniMessage(message: String, prefix: Boolean = true, vararg replacements: TagResolver) {
-        val player = MinecraftClient.getInstance().player ?: return
+        val player = Minecraft.getInstance().player ?: return
         val mm = MiniMessage.miniMessage()
 
         val parsed = mm.deserialize("${if (prefix) "<gold>[Build Bugs]</gold> " else ""}$message", *replacements)
@@ -51,15 +51,15 @@ object Utils {
      * Checks if the player is connected to the server specified in the config.
      */
     fun isOnEventServer(): Boolean {
-        val server = MinecraftClient.getInstance().currentServerEntry ?: return false
-        return server.address == BuildBugsClientEntrypoint.config.eventIP
+        val server = Minecraft.getInstance().currentServer ?: return false
+        return server.ip == BuildBugsClientEntrypoint.config.eventIP
     }
 
     /**
      * Checks if the player is connected to MCC Island.
      */
     fun isOnIsland(): Boolean {
-        val server = MinecraftClient.getInstance().currentServerEntry ?: return false
-        return server.address.endsWith("mccisland.net") || server.address.endsWith("mccisland.com")
+        val server = Minecraft.getInstance().currentServer ?: return false
+        return server.ip.endsWith("mccisland.net") || server.ip.endsWith("mccisland.com")
     }
 }
