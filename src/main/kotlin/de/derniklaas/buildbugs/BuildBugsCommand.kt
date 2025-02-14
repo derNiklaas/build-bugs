@@ -66,7 +66,7 @@ class BuildBugsCommand {
     }
 
     @Command("buildbug force_state <game> <type>")
-    fun force_state_full(
+    fun force_state_minimum(
         context: CommandContext<*>,
         @Argument("game", suggestions = "gameSuggestions") game: String,
         @Argument("type") type: String
@@ -78,6 +78,7 @@ class BuildBugsCommand {
         BugCreator.forceGameState(game, type, Constants.UNKNOWN)
     }
 
+    @Command("buildbug")
     fun report(context: CommandContext<*>) {
         BugCreator.report()
     }
