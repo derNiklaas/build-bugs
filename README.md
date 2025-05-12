@@ -4,7 +4,7 @@
 
 ### Requirements
 
-You need Minecraft 1.21.4 and at least [Noxesium 2.5.0](https://modrinth.com/mod/noxesium/version/2.5.0).
+You need Minecraft 1.21.5 and at least [Noxesium 2.6.2](https://modrinth.com/mod/noxesium/version/2.6.2).
 
 ### Usage
 
