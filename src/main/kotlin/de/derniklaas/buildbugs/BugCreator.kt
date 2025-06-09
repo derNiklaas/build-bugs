@@ -38,18 +38,17 @@ object BugCreator {
         val blockPos = player.blockPosition()
         val map = gameState.mapName
 
-        val minecraftMessage = getCopyMessage(area, map, blockPos).trim()
-        val discordMessage = getCopyMessage(area, map, blockPos, true)
+        val message = getCopyMessage(area, map, blockPos).trim()
         Utils.sendMiniMessage(
             "<click:copy_to_clipboard:'${
-                discordMessage.replace(
+                message.replace(
                     "'", "\\\'"
                 )
-            }'>$minecraftMessage <yellow><bold>[CLICK TO COPY]</bold></yellow></click>", true
+            }'>$message <yellow><bold>[CLICK TO COPY]</bold></yellow></click>", true
         )
 
         if (BuildBugsClientEntrypoint.config.copyToClipboard) {
-            setClipboard(discordMessage)
+            setClipboard(message)
         }
     }
 
@@ -71,10 +70,9 @@ object BugCreator {
         printCurrentGameState()
     }
 
-    private fun getCopyMessage(area: String, map: String, position: BlockPos, discord: Boolean = false): String {
+    private fun getCopyMessage(area: String, map: String, position: BlockPos): String {
         val start = if (area.isNotBlank()) "$area, " else ""
-        val codeBlock = if (!discord) "" else "`"
-        return "[$start${if (map.isNotBlank() && map != Constants.UNKNOWN) map else "$codeBlock${position.x} ${position.y} ${position.z}$codeBlock"}] "
+        return "[$start${if (map.isNotBlank() && map != Constants.UNKNOWN) map else "${position.x} ${position.y} ${position.z}"}] "
     }
 
     /**
