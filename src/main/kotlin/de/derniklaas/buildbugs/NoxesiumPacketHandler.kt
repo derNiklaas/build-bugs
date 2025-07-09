@@ -39,7 +39,7 @@ class NoxesiumPacketHandler {
 
     private fun onStatePacket(packet: ClientboundMccGameStatePacket) {
         // Set the map to Post Game during the Podium Phase
-        if (packet.stage == Constants.PODIUM_PHASE) {
+        if (packet.stage.lowercase() == Constants.PODIUM_PHASE) {
             BugCreator.updateMap("Post Game")
             return
         }
