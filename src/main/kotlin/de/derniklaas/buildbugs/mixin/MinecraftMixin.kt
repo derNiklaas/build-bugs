@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 
 @Mixin(Minecraft::class)
-abstract class ClearChatOnDisconnectMixin {
+abstract class MinecraftMixin {
 
     @Inject(at = [At("HEAD")], method = ["Lnet/minecraft/class_310;method_55505()V"])
     fun onDisconnect(info: CallbackInfo) {
