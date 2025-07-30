@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 @Mixin(Minecraft::class)
 abstract class ClearChatOnDisconnectMixin {
 
-    @Inject(at = [At("HEAD")], method = ["Lnet/minecraft/class_310;method_18099()V"])
+    @Inject(at = [At("HEAD")], method = ["Lnet/minecraft/class_310;method_55505()V"])
     fun onDisconnect(info: CallbackInfo) {
         BugCreator.resetGameState()
     }
