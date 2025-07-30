@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     kotlin("jvm")
     id("fabric-loom")
@@ -83,7 +85,9 @@ tasks {
     }
 
     compileKotlin {
-        kotlinOptions.jvmTarget = "21"
+        compilerOptions {
+            jvmTarget = JvmTarget.fromTarget("21")
+        }
     }
 }
 
