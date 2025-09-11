@@ -4,15 +4,15 @@ import com.noxcrew.noxesium.core.mcc.ClientboundMccServerPacket
 import de.derniklaas.buildbugs.Constants
 
 data class ServerState(
-    val server: String, val types: List<String>, val mapName: String
+    val server: String, val types: Set<String>, val mapName: String
 ) {
     companion object {
-        val UNKNOWN = ServerState(Constants.UNKNOWN, listOf(Constants.UNKNOWN), Constants.UNKNOWN)
+        val UNKNOWN = ServerState(Constants.UNKNOWN, setOf(Constants.UNKNOWN), Constants.UNKNOWN)
 
         fun fromPacket(packet: ClientboundMccServerPacket): ServerState {
             val isLobby = packet.types.any { it in Constants.LOBBIES }
             return ServerState(
-                packet.server, packet.types, if (isLobby) "" else "Pre Game"
+                packet.server, packet.types.toSet(), if (isLobby) "" else "Pre Game"
             )
         }
     }

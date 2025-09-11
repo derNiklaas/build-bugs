@@ -102,7 +102,7 @@ object BugCreator {
      * Forces the [gameState] to the given [type], [subType] and [map].
      */
     fun forceGameState(type: String, subType: String, map: String) {
-        gameState = ServerState(type, listOf(subType), map)
+        gameState = ServerState(type, setOf(subType), map)
         Utils.sendDebugMessage("Forced gameState to ${gameState.miniMessageString()}")
     }
 }
