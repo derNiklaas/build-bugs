@@ -1,6 +1,6 @@
 package de.derniklaas.buildbugs
 
-import com.noxcrew.noxesium.network.clientbound.ClientboundMccServerPacket
+import com.noxcrew.noxesium.core.mcc.ClientboundMccServerPacket
 import de.derniklaas.buildbugs.utils.ServerState
 import de.derniklaas.buildbugs.utils.Utils
 import net.minecraft.client.Minecraft
@@ -102,7 +102,7 @@ object BugCreator {
      * Forces the [gameState] to the given [type], [subType] and [map].
      */
     fun forceGameState(type: String, subType: String, map: String) {
-        gameState = ServerState(type, subType, map)
+        gameState = ServerState(type, listOf(subType), map)
         Utils.sendDebugMessage("Forced gameState to ${gameState.miniMessageString()}")
     }
 }
