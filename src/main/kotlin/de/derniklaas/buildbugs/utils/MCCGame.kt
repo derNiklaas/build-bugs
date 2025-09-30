@@ -15,10 +15,11 @@ enum class MCCGame(val displayName: String, val types: Set<String>) {
     SANDS_OF_TIME("", setOf(Constants.SANDS_OF_TIME)),
     SURVIVAL_GAMES("Survival Games", setOf(Constants.SURVIVAL_GAMES)),
     PARKOUR_TAG("Parkour Tag", setOf(Constants.PARKOUR_TAG)),
-    MELTDOWN("", setOf(Constants.MELTDOWN)),
+    MELTDOWN("Meltdown", setOf(Constants.MELTDOWN)),
     GRID_RUNNERS("Grid Runners", setOf(Constants.GRID_RUNNERS)),
     BINGO_BUT_FAST("Bingo But Fast", setOf(Constants.BINGO_BUT_FAST)),
     BUILD_MART("Build Mart", setOf(Constants.BUILD_MART)),
+    DODGEBOLT("Dodgebolt", setOf(Constants.DODGEBOLT)),
     HUB("Hub", setOf(Constants.HUB)),
     LIMBO("", setOf(Constants.LIMBO)),
     UNKNOWN("", setOf(Constants.UNKNOWN));
