@@ -8,11 +8,16 @@ import de.derniklaas.buildbugs.utils.Utils
 class NoxesiumPacketHandler {
 
     init {
-
-        MccPackets.CLIENTBOUND_MCC_SERVER.addListener(this) { _, packet, _ ->
+        MccPackets.CLIENTBOUND_MCC_SERVER.addListener<Any, ClientboundMccServerPacket>(
+            this,
+            ClientboundMccServerPacket::class.java
+        ) { _, packet, _ ->
             onServerPacket(packet)
         }
-        MccPackets.CLIENTBOUND_MCC_GAME_STATE.addListener(this) { _, packet, _ ->
+        MccPackets.CLIENTBOUND_MCC_GAME_STATE.addListener<Any, ClientboundMccGameStatePacket>(
+            this,
+            ClientboundMccGameStatePacket::class.java
+        ) { _, packet, _ ->
             onStatePacket(packet)
         }
     }

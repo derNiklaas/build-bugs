@@ -17,6 +17,8 @@ import org.lwjgl.glfw.GLFW
 
 class BuildBugsClientEntrypoint : MccNoxesiumEntrypoint() {
 
+    override fun getVersion(): String? = "1"
+
     companion object {
         private const val MOD_ID = "build-bugs"
         val config = BuildBugsConfig.fromFile()
