@@ -10,7 +10,7 @@ data class ServerState(
         val UNKNOWN = ServerState(Constants.UNKNOWN, setOf(Constants.UNKNOWN), Constants.UNKNOWN)
 
         fun fromPacket(packet: ClientboundMccServerPacket): ServerState {
-            val isLobby = packet.types.any { it in Constants.LOBBIES }
+            val isLobby = packet.server in Constants.LOBBIES
             return ServerState(
                 packet.server, packet.types.toSet(), if (isLobby) "" else "Pre Game"
             )
@@ -25,12 +25,12 @@ data class ServerState(
      */
     fun getFancyName(): String {
         val game = MCCGame.entries.firstOrNull { game ->
-            game.types.any { it in types }
+            game.types.any { it == server }
         } ?: MCCGame.UNKNOWN
 
         var output = game.displayName
 
-        if (Constants.LOBBY in types && Constants.FISHING !in types) {
+        if (game != MCCGame.HUB && Constants.LOBBY in types && Constants.FISHING !in types) {
             output += if (output.isNotEmpty()) " " else ""
             output += "Lobby"
         }
