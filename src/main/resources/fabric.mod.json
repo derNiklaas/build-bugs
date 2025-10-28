@@ -17,7 +17,7 @@
   "icon": "assets/buildbugs/icon.png",
   "environment": "client",
   "entrypoints": {
-    "client": [
+    "noxesium": [
       {
         "adapter": "kotlin",
         "value": "de.derniklaas.buildbugs.BuildBugsClientEntrypoint"

@@ -28,7 +28,7 @@ abstract class TitleGuiMixin {
         // Ignore non MCC Servers
         if (!Utils.isOnMCCServer()) return
         // Only check titles in Parkour Warrior
-        if (BugCreator.gameState.serverType != Constants.PARKOUR_WARRIOR) return
+        if (BugCreator.gameState.server != Constants.PARKOUR_WARRIOR) return
 
         val courseTitle = title.getString(Int.MAX_VALUE)
         if (!leapRegex.containsMatchIn(courseTitle)) return

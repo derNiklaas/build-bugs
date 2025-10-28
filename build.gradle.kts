@@ -43,7 +43,7 @@ dependencies {
     modImplementation("net.fabricmc:fabric-language-kotlin:${property("fabric_kotlin_version")}")!!
     include(implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")!!)
     modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_api_version")}")
-    modCompileOnly("com.noxcrew.noxesium:fabric:${property("noxesium_version")}")
+    modCompileOnly("com.noxcrew.noxesium:fabric-platform:${property("noxesium_version")}")
     modImplementation(include("net.kyori:adventure-platform-fabric:${property("adventure_version")}")!!)
     modImplementation(include("org.incendo:cloud-fabric:${property("cloud_version")}")!!)
     modImplementation(include("org.incendo:cloud-annotations:2.0.0")!!)

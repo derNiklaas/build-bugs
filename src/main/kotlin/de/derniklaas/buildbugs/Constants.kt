@@ -10,6 +10,7 @@ object Constants {
     const val SKY_BATTLE = "sky-battle"
     const val DYNABALL = "dynaball"
     const val ROCKET_SPLEEF_RUSH = "rocket-spleef"
+    const val FISHING = "fishing"
     const val LIMBO = "limbo"
 
     /* Fishing Islands & Grottos */

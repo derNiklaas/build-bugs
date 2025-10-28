@@ -1,38 +1,43 @@
 package de.derniklaas.buildbugs
 
-import com.noxcrew.noxesium.network.NoxesiumPackets
-import com.noxcrew.noxesium.network.clientbound.ClientboundMccGameStatePacket
-import com.noxcrew.noxesium.network.clientbound.ClientboundMccServerPacket
+import com.noxcrew.noxesium.core.mcc.ClientboundMccGameStatePacket
+import com.noxcrew.noxesium.core.mcc.ClientboundMccServerPacket
+import com.noxcrew.noxesium.core.mcc.MccPackets
 import de.derniklaas.buildbugs.utils.Utils
 
 class NoxesiumPacketHandler {
 
     init {
-        NoxesiumPackets.CLIENT_MCC_SERVER.addListener(this) { _, packet, _ ->
+        MccPackets.CLIENTBOUND_MCC_SERVER.addListener<Any, ClientboundMccServerPacket>(
+            this,
+            ClientboundMccServerPacket::class.java
+        ) { _, packet, _ ->
             onServerPacket(packet)
         }
-        NoxesiumPackets.CLIENT_MCC_GAME_STATE.addListener(this) { _, packet, _ ->
+        MccPackets.CLIENTBOUND_MCC_GAME_STATE.addListener<Any, ClientboundMccGameStatePacket>(
+            this,
+            ClientboundMccGameStatePacket::class.java
+        ) { _, packet, _ ->
             onStatePacket(packet)
         }
     }
 
     private fun onServerPacket(packet: ClientboundMccServerPacket) {
-        BugCreator.handleServerStatePacket(packet, packet.serverType != Constants.PARKOUR_WARRIOR)
+        BugCreator.handleServerStatePacket(packet, packet.server != Constants.PARKOUR_WARRIOR)
 
         // Set default map names in PKW
-        if (packet.serverType == Constants.PARKOUR_WARRIOR) {
+        if (Constants.PARKOUR_WARRIOR in packet.types) {
             if (Utils.isOnEventServer()) {
                 BugCreator.updateMap("Start Area")
-            } else {
-                when (packet.subType) {
-                    Constants.PARKOUR_WARRIOR_DAILY, Constants.PARKOUR_WARRIOR_DOJO -> {
-                        BugCreator.updateMap("Dojo Entrance")
-                    }
+                return
+            }
 
-                    Constants.PARKOUR_WARRIOR_SURVIVOR -> {
-                        BugCreator.updateMap("Survivor Start")
-                    }
-                }
+            if (Constants.PARKOUR_WARRIOR_DOJO in packet.types || Constants.PARKOUR_WARRIOR_DAILY in packet.types) {
+                BugCreator.updateMap("Dojo Entrance")
+                return
+            } else if (Constants.PARKOUR_WARRIOR_SURVIVOR in packet.types) {
+                BugCreator.updateMap("Survivor Start")
+                return
             }
         }
     }
@@ -46,7 +51,7 @@ class NoxesiumPacketHandler {
 
         // ignore parkour warrior updates, as they only contain "Parkour Warrior Survivor" or nothing
         // also ignore the podium phase as it overwrites the map part
-        if (BugCreator.gameState.serverType == Constants.PARKOUR_WARRIOR && Utils.isOnIsland()) {
+        if (Constants.PARKOUR_WARRIOR in BugCreator.gameState.types && Utils.isOnIsland()) {
             // Provide debug info
             Utils.sendDebugMessage("Blocked GameStatePacket: (name: <green>${packet.mapName}</green>, id: ${packet.mapId}, phase: ${packet.phaseType}, stage: ${packet.stage})")
 
@@ -56,5 +61,4 @@ class NoxesiumPacketHandler {
         Utils.sendDebugMessage("Received GameStatePacket: (name: <green>${packet.mapName}</green>, id: ${packet.mapId}, phase: ${packet.phaseType}, stage: ${packet.stage})")
         BugCreator.updateMap(packet.mapName)
     }
-
 }
