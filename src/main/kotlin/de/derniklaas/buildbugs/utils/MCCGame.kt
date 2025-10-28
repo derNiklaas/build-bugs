@@ -12,7 +12,7 @@ enum class MCCGame(val displayName: String, val types: Set<String>) {
     ROCKET_SPLEEF_RUSH("Rocket Spleef", setOf(Constants.ROCKET_SPLEEF_RUSH)),
     ACE_RACE("Ace Race", setOf(Constants.ACE_RACE)),
     RAILROAD_RUSH("Railroad Rush", setOf(Constants.RAILROAD_RUSH)),
-    SANDS_OF_TIME("", setOf(Constants.SANDS_OF_TIME)),
+    SANDS_OF_TIME("Sands of Time", setOf(Constants.SANDS_OF_TIME)),
     SURVIVAL_GAMES("Survival Games", setOf(Constants.SURVIVAL_GAMES)),
     PARKOUR_TAG("Parkour Tag", setOf(Constants.PARKOUR_TAG)),
     MELTDOWN("Meltdown", setOf(Constants.MELTDOWN)),
