@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.loader.api.FabricLoader
 import net.fabricmc.loader.api.Version
 import net.minecraft.client.KeyMapping
+import net.minecraft.resources.ResourceLocation
 import org.incendo.cloud.annotations.AnnotationParser
 import org.incendo.cloud.execution.ExecutionCoordinator
 import org.incendo.cloud.fabric.FabricClientCommandManager
@@ -31,14 +32,18 @@ class BuildBugsClientEntrypoint : ClientModInitializer {
         val annotationParser = AnnotationParser(manager, TypeToken.get(FabricClientCommandSource::class.java))
         annotationParser.parse(BuildBugsCommand())
         BuildBugsConfig.createDefaultConfig()
+
+        val resourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, "keybinds")
+        val keybindCategory = KeyMapping.Category.register(resourceLocation)
+
         val reportKeybinding = KeyBindingHelper.registerKeyBinding(
             KeyMapping(
-                "key.buildbugs.report", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_U, "category.buildbugs"
+                "key.buildbugs.report", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_U, keybindCategory
             )
         )
         val bugreportKeybinding = KeyBindingHelper.registerKeyBinding(
             KeyMapping(
-                "key.buildbugs.bugreport", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_I, "category.buildbugs"
+                "key.buildbugs.bugreport", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_I, keybindCategory
             )
         )
 
