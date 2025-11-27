@@ -3,15 +3,16 @@ package de.derniklaas.buildbugs
 object Constants {
     /* Game types */
     const val LOBBY = "lobby"
-    const val PARKOUR_WARRIOR = "parkour-warrior"
-    const val HOLE_IN_THE_WALL = "hitw"
+    const val PARKOUR_WARRIOR = "parkour_warrior"
+    const val HOLE_IN_THE_WALL = "hole_in_the_wall"
     const val TO_GET_TO_THE_OTHER_SIDE = "tgttos"
-    const val BATTLE_BOX = "battle-box"
-    const val SKY_BATTLE = "sky-battle"
+    const val BATTLE_BOX = "battle_box"
+    const val SKY_BATTLE = "sky_battle"
     const val DYNABALL = "dynaball"
-    const val ROCKET_SPLEEF_RUSH = "rocket-spleef"
+    const val ROCKET_SPLEEF_RUSH = "rocket_spleef"
     const val FISHING = "fishing"
     const val LIMBO = "limbo"
+    const val MAIN_LOBBY = "main_lobby"
 
     /* Fishing Islands & Grottos */
     const val VERDANT_WOODS = "temperate_1"
