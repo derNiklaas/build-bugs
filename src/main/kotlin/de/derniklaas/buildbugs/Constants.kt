@@ -42,10 +42,11 @@ object Constants {
     const val HOLE_IN_THE_WALL_EVENT = "hole-in-the-wall"
     const val DODGEBOLT = "dodgebolt"
 
-    /* Parkour Warrior subtypes */
+    /* Game subtypes */
     const val PARKOUR_WARRIOR_DAILY = "daily"
     const val PARKOUR_WARRIOR_DOJO = "main"
     const val PARKOUR_WARRIOR_SURVIVOR = "survival"
+    const val BATTLE_BOX_ARENA = "arena"
 
     /* Phases */
     const val PODIUM_PHASE = "podiumphase"
