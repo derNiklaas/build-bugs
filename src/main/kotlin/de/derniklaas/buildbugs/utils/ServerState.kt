@@ -47,7 +47,9 @@ data class ServerState(
         Constants.PARKOUR_WARRIOR -> "Parkour Warrior"
         Constants.HOLE_IN_THE_WALL, Constants.HOLE_IN_THE_WALL_EVENT -> "HITW"
         Constants.TO_GET_TO_THE_OTHER_SIDE -> "TGTTOS"
-        Constants.BATTLE_BOX -> "Battle Box"
+        Constants.BATTLE_BOX -> {
+            if (subType == Constants.BATTLE_BOX_ARENA) "Battle Box Arena" else "Battle Box"
+        }
         Constants.SKY_BATTLE -> "Sky Battle"
         Constants.DYNABALL -> "Dynaball"
         Constants.ROCKET_SPLEEF_RUSH -> "Rocket Spleef"
