@@ -58,7 +58,11 @@ data class ServerState(
                     types.any { it in game.types }
                 } ?: MCCGame.UNKNOWN
 
-                gameMode.displayName
+                if (gameMode == MCCGame.BATTLE_BOX && Constants.BATTLE_BOX_ARENA in types) {
+                    "Battle Box Arena"
+                } else {
+                    gameMode.displayName
+                }
             }
         }
 
