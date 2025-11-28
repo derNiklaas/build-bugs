@@ -11,8 +11,9 @@ data class ServerState(
 
         fun fromPacket(packet: ClientboundMccServerPacket): ServerState {
             val isLobby = packet.server in Constants.LOBBIES
+            val isFishing = packet.server == Constants.FISHING
             return ServerState(
-                packet.server, packet.types.toSet(), if (isLobby) "" else "Pre Game"
+                packet.server, packet.types.toSet(), if (isLobby || isFishing) "" else "Pre Game"
             )
         }
     }
@@ -25,26 +26,44 @@ data class ServerState(
      */
     fun getFancyName(): String {
         val game = MCCGame.entries.firstOrNull { game ->
-            game.types.any { it == server }
+            server in game.types
         } ?: MCCGame.UNKNOWN
 
-        var output = game.displayName
+        Utils.sendDebugMessage("Determining fancy name for server='$server', types=$types, mapName='$mapName', detected game='${game}'")
+        val output = when (game) {
+            MCCGame.LOBBY -> {
+                val gameMode = MCCGame.entries.firstOrNull { game ->
+                    types.any { it in game.types }
+                } ?: MCCGame.UNKNOWN
 
-        if (game != MCCGame.HUB && Constants.LOBBY in types && Constants.FISHING !in types) {
-            output += if (output.isNotEmpty()) " " else ""
-            output += "Lobby"
-        }
+                if (gameMode != MCCGame.LOBBY) {
+                    "${gameMode.displayName} Lobby"
+                } else if (Constants.MAIN_LOBBY in types) {
+                    "Main Lobby"
+                } else {
+                    ""
+                }
+            }
 
-        val fishingIsland = FishingIsland.entries.firstOrNull { island ->
-            island.type in types
-        } ?: FishingIsland.UNKNOWN
+            MCCGame.FISHING -> {
+                val fishingIsland = FishingIsland.entries.firstOrNull { island ->
+                    island.type in types
+                } ?: FishingIsland.UNKNOWN
 
-        if (fishingIsland != FishingIsland.UNKNOWN) {
-            output = fishingIsland.displayName
+                fishingIsland.displayName
+            }
+
+            else -> {
+                val gameMode = MCCGame.entries.firstOrNull { game ->
+                    types.any { it in game.types }
+                } ?: MCCGame.UNKNOWN
+
+                gameMode.displayName
+            }
         }
 
         if (output.isEmpty()) {
-            return types.joinToString(", ")
+            return "$server - ${types.joinToString(", ")}"
         }
         return output
     }
