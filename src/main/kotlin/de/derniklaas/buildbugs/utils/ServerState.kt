@@ -53,11 +53,7 @@ data class ServerState(
                 fishingIsland.displayName
             }
 
-            MCCGame.HUB -> {
-                game.displayName
-            }
-
-            else -> {
+            MCCGame.UNKNOWN -> {
                 val gameMode = MCCGame.entries.firstOrNull { game ->
                     types.any { it in game.types }
                 } ?: MCCGame.UNKNOWN
@@ -68,6 +64,8 @@ data class ServerState(
                     gameMode.displayName
                 }
             }
+
+            else -> game.displayName
         }
 
         if (output.isEmpty()) {
