@@ -57,7 +57,7 @@ object Constants {
     const val UNKNOWN = "Unknown"
 
     /* Groups */
-    val LOBBIES = listOf(LOBBY, HUB, LIMBO)
+    val LOBBIES = listOf(LOBBY, HUB, LIMBO, "main_lobby", "fishing", "game_lobbies")
     val GAMES = listOf(
         ACE_RACE,
         RAILROAD_RUSH,
