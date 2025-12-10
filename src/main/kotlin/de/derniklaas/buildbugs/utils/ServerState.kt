@@ -44,7 +44,7 @@ data class ServerState(
         }
 
         // Game modes
-        Constants.PARKOUR_WARRIOR -> "Parkour Warrior"
+        Constants.PARKOUR_WARRIOR, "dojo" -> "Parkour Warrior"
         Constants.HOLE_IN_THE_WALL, Constants.HOLE_IN_THE_WALL_EVENT -> "HITW"
         Constants.TO_GET_TO_THE_OTHER_SIDE -> "TGTTOS"
         Constants.BATTLE_BOX -> {
@@ -65,6 +65,10 @@ data class ServerState(
         Constants.BUILD_MART -> "Build Mart"
         // Empty because map is already set to the name of the game
         Constants.SANDS_OF_TIME, Constants.MELTDOWN, Constants.DODGEBOLT, Constants.LIMBO, Constants.UNKNOWN -> ""
+
+        "main_lobby" -> "Main Lobby"
+        "game_lobbies" -> "Game Lobby"
+        "fishing" -> "Fishing"
 
         else -> "$type $subType"
     }
