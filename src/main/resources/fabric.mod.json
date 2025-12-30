@@ -33,6 +33,6 @@
     "minecraft": ">=1.21.8",
     "java": ">=17",
     "fabric-language-kotlin": "*",
-    "noxesium": ">=3"
+    "noxesium": "*"
   }
 }
