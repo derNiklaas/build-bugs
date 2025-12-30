@@ -89,7 +89,7 @@ tasks {
 
     compileKotlin {
         compilerOptions {
-            jvmTarget = JvmTarget.fromTarget("21")
+            jvmTarget = JvmTarget.fromTarget("25")
         }
     }
 }
