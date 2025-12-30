@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.loader.api.FabricLoader
 import net.fabricmc.loader.api.Version
 import net.minecraft.client.KeyMapping
+import net.minecraft.resources.Identifier
 import org.incendo.cloud.annotations.AnnotationParser
 import org.incendo.cloud.execution.ExecutionCoordinator
 import org.incendo.cloud.fabric.FabricClientCommandManager
@@ -17,7 +18,7 @@ import org.lwjgl.glfw.GLFW
 
 class BuildBugsClientEntrypoint : MccNoxesiumEntrypoint() {
 
-    override fun getVersion(): String? = "1"
+    override fun getVersion(): String = "1"
 
     companion object {
         private const val MOD_ID = "build-bugs"
@@ -31,14 +32,18 @@ class BuildBugsClientEntrypoint : MccNoxesiumEntrypoint() {
         val annotationParser = AnnotationParser(manager, TypeToken.get(FabricClientCommandSource::class.java))
         annotationParser.parse(BuildBugsCommand())
         BuildBugsConfig.createDefaultConfig()
+
+        val resourceLocation = Identifier.fromNamespaceAndPath(MOD_ID, "keybinds")
+        val keybindCategory = KeyMapping.Category.register(resourceLocation)
+
         val reportKeybinding = KeyBindingHelper.registerKeyBinding(
             KeyMapping(
-                "key.buildbugs.report", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_U, "category.buildbugs"
+                "key.buildbugs.report", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_U, keybindCategory
             )
         )
         val bugreportKeybinding = KeyBindingHelper.registerKeyBinding(
             KeyMapping(
-                "key.buildbugs.bugreport", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_I, "category.buildbugs"
+                "key.buildbugs.bugreport", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_I, keybindCategory
             )
         )
 

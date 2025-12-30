@@ -23,7 +23,7 @@ abstract class TitleGuiMixin {
 
     private val leapRegex = """\[[MBSF]\d?-\d]""".toRegex()
 
-    @Inject(at = [At("TAIL")], method = ["Lnet/minecraft/class_329;method_34002(Lnet/minecraft/class_2561;)V"])
+    @Inject(at = [At("TAIL")], method = ["setSubtitle(Lnet/minecraft/network/chat/Component;)V"])
     fun setSubTitle(title: Component, info: CallbackInfo) {
         // Ignore non MCC Servers
         if (!Utils.isOnMCCServer()) return

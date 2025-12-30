@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 @Mixin(ChatComponent::class)
 abstract class ChatMixin {
 
-    @Inject(at = [At("TAIL")], method = ["Lnet/minecraft/class_338;method_1812(Lnet/minecraft/class_2561;)V"])
+    @Inject(at = [At("TAIL")], method = ["Lnet/minecraft/client/gui/components/ChatComponent;addMessage(Lnet/minecraft/network/chat/Component;)V"])
     fun onChatMessage(message: Component, info: CallbackInfo) {
         // ignore non MCC servers
         if (!Utils.isOnMCCServer()) return
