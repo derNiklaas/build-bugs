@@ -33,6 +33,7 @@ repositories {
     maven("https://maven.noxcrew.com/public")
     maven("https://maven.enginehub.org/repo/")
     maven("https://maven.terraformersmc.com/")
+    maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
 }
 
 dependencies {
@@ -49,6 +50,8 @@ dependencies {
     modImplementation(include("org.incendo:cloud-annotations:2.0.0")!!)
     modImplementation(include("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0")!!)
     modImplementation(include("org.incendo:cloud-kotlin-extensions:2.0.0")!!)
+
+    modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.2")
 }
 
 tasks {
