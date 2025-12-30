@@ -1,5 +1,5 @@
 {
   "key.buildbugs.report": "Generate a build bug report",
   "key.buildbugs.bugreport": "Generate a /bugreport",
-  "category.buildbugs": "#build-bugs"
+  "key.category.build-bugs.keybinds": "#build-bugs"
 }

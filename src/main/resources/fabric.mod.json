@@ -30,10 +30,9 @@
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",
-    "minecraft": "~${minecraft_version}",
+    "minecraft": ">=1.21.8",
     "java": ">=17",
-    "fabric-language-kotlin": ">=${fabric_kotlin_version}",
-    "noxesium": ">=${noxesium_version}",
-    "adventure-platform-fabric": ">=${adventure_version}"
+    "fabric-language-kotlin": "*",
+    "noxesium": "*"
   }
 }
