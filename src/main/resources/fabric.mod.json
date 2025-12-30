@@ -34,5 +34,14 @@
     "java": ">=17",
     "fabric-language-kotlin": "*",
     "noxesium": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.modrinth": "https://modrinth.com/mod/build-bugs/",
+        "modmenu.github_releases": "https://github.com/derNiklaas/build-bugs/releases"
+      },
+      "update_checker": true
+    }
   }
 }
