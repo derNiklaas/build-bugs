@@ -23,12 +23,12 @@ abstract class TitleGuiMixin {
 
     private val leapRegex = """\[[MBSF]\d?-\d]""".toRegex()
 
-    @Inject(at = [At("TAIL")], method = ["Lnet/minecraft/class_329;method_34002(Lnet/minecraft/class_2561;)V"])
+    @Inject(at = [At("TAIL")], method = ["setSubtitle(Lnet/minecraft/network/chat/Component;)V"])
     fun setSubTitle(title: Component, info: CallbackInfo) {
         // Ignore non MCC Servers
         if (!Utils.isOnMCCServer()) return
         // Only check titles in Parkour Warrior
-        if (BugCreator.gameState.serverType != Constants.PARKOUR_WARRIOR && BugCreator.gameState.serverType != "dojo") return
+        if (Constants.PARKOUR_WARRIOR !in BugCreator.gameState.types) return
 
         val courseTitle = title.getString(Int.MAX_VALUE)
         if (!leapRegex.containsMatchIn(courseTitle)) return

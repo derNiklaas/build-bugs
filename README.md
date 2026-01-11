@@ -8,7 +8,8 @@
 
 ### Requirements
 
-You need Minecraft 1.21.5 and at least [Noxesium 2.6.2](https://modrinth.com/mod/noxesium/version/2.6.2).
+You need Minecraft 1.21.11 and at least [Noxesium 3.0.0](https://modrinth.com/mod/noxesium/version/3.0.0).
+See the [Modrinth page](https://modrinth.com/mod/build-bugs/versions) for older versions of Builds Bugs.
 
 ### Usage
 

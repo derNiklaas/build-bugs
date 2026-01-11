@@ -1,17 +1,19 @@
 package de.derniklaas.buildbugs.utils
 
-import com.noxcrew.noxesium.network.clientbound.ClientboundMccServerPacket
+import com.noxcrew.noxesium.core.mcc.ClientboundMccServerPacket
 import de.derniklaas.buildbugs.Constants
 
 data class ServerState(
-    val serverType: String, val subType: String, val mapName: String
+    val server: String, val types: Set<String>, val mapName: String
 ) {
     companion object {
-        val UNKNOWN = ServerState(Constants.UNKNOWN, Constants.UNKNOWN, Constants.UNKNOWN)
+        val UNKNOWN = ServerState(Constants.UNKNOWN, setOf(Constants.UNKNOWN), Constants.UNKNOWN)
 
         fun fromPacket(packet: ClientboundMccServerPacket): ServerState {
+            val isLobby = packet.server in Constants.LOBBIES
+            val isFishing = packet.server == Constants.FISHING
             return ServerState(
-                packet.serverType, packet.subType, if (packet.serverType in Constants.LOBBIES) "" else "Pre Game"
+                packet.server, packet.types.toSet(), if (isLobby || isFishing) "" else "Pre Game"
             )
         }
     }
@@ -20,43 +22,56 @@ data class ServerState(
      * Returns the fancy name of the current location.
      *
      * If it's a game lobby, it will return the game name and add "Lobby" to it.
-     * If it's not known, it will return the [type] and [subType]
+     * If it's not known, it will return all types
      */
-    fun getFancyName(type: String = this.serverType): String = when (type) {
-        Constants.LOBBY -> {
-            when(subType) {
-                "main_lobby" -> "Main Lobby"
-                "game_lobbies" -> "Game Lobby"
-                else -> "${getFancyName(subType)} Lobby"
+    fun getFancyName(): String {
+        val game = MCCGame.entries.firstOrNull { game ->
+            server in game.types
+        } ?: MCCGame.UNKNOWN
+
+        Utils.sendDebugMessage("Determining fancy name for server='$server', types=$types, mapName='$mapName', detected game='${game}'")
+        val output = when (game) {
+            MCCGame.LOBBY -> {
+                val gameMode = MCCGame.entries.firstOrNull { game ->
+                    types.any { it in game.types }
+                } ?: MCCGame.UNKNOWN
+
+                if (gameMode != MCCGame.LOBBY) {
+                    "${gameMode.displayName} Lobby"
+                } else if (Constants.MAIN_LOBBY in types) {
+                    "Main Lobby"
+                } else {
+                    ""
+                }
             }
+
+            MCCGame.FISHING -> {
+                val fishingIsland = FishingIsland.entries.firstOrNull { island ->
+                    island.type in types
+                } ?: FishingIsland.UNKNOWN
+
+                fishingIsland.displayName
+            }
+
+            MCCGame.UNKNOWN -> {
+                val gameMode = MCCGame.entries.firstOrNull { game ->
+                    types.any { it in game.types }
+                } ?: MCCGame.UNKNOWN
+
+                if (gameMode == MCCGame.BATTLE_BOX && Constants.BATTLE_BOX_ARENA in types) {
+                    "Battle Box Arena"
+                } else {
+                    gameMode.displayName
+                }
+            }
+
+            else -> game.displayName
         }
 
-        // Game modes
-        Constants.PARKOUR_WARRIOR, "dojo" -> "Parkour Warrior"
-        Constants.HOLE_IN_THE_WALL, Constants.HOLE_IN_THE_WALL_EVENT -> "HITW"
-        Constants.TO_GET_TO_THE_OTHER_SIDE -> "TGTTOS"
-        Constants.BATTLE_BOX -> {
-            if (subType == Constants.BATTLE_BOX_ARENA) "Battle Box Arena" else "Battle Box"
+        if (output.isEmpty()) {
+            return "$server - ${types.joinToString(", ")}"
         }
-        Constants.SKY_BATTLE -> "Sky Battle"
-        Constants.DYNABALL -> "Dynaball"
-        Constants.ROCKET_SPLEEF_RUSH -> "Rocket Spleef"
-
-        // Event game types
-        Constants.HUB -> "Hub"
-        Constants.ACE_RACE -> "Ace Race"
-        Constants.PARKOUR_TAG -> "Parkour Tag"
-        Constants.GRID_RUNNERS -> "Grid Runners"
-        Constants.BINGO_BUT_FAST -> "Bingo But Fast"
-        Constants.SURVIVAL_GAMES -> "Survival Games"
-        Constants.RAILROAD_RUSH -> "Railroad Rush"
-        Constants.BUILD_MART -> "Build Mart"
-        // Empty because map is already set to the name of the game
-        Constants.SANDS_OF_TIME, Constants.MELTDOWN, Constants.DODGEBOLT, Constants.LIMBO, Constants.UNKNOWN -> ""
-
-        "fishing" -> "Fishing"
-
-        else -> "$type $subType"
+        return output
     }
 
     /**
@@ -65,6 +80,6 @@ data class ServerState(
     fun withMapName(name: String) = copy(mapName = name)
 
     fun miniMessageString(): String {
-        return "type: <green>$serverType</green>, subType: <green>$subType</green>, map: <green>$mapName</green>"
+        return "server: <green>$server</green>, types: <green>[${types.joinToString(", ")}]</green>, map: <green>$mapName</green>"
     }
 }

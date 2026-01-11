@@ -1,23 +1,24 @@
 package de.derniklaas.buildbugs
 
 import com.mojang.blaze3d.platform.InputConstants
-import com.noxcrew.noxesium.NoxesiumFabricMod
+import com.noxcrew.noxesium.core.fabric.mcc.MccNoxesiumEntrypoint
 import de.derniklaas.buildbugs.utils.Utils
 import io.leangen.geantyref.TypeToken
-import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.loader.api.FabricLoader
 import net.fabricmc.loader.api.Version
 import net.minecraft.client.KeyMapping
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import org.incendo.cloud.annotations.AnnotationParser
 import org.incendo.cloud.execution.ExecutionCoordinator
 import org.incendo.cloud.fabric.FabricClientCommandManager
 import org.lwjgl.glfw.GLFW
 
-class BuildBugsClientEntrypoint : ClientModInitializer {
+class BuildBugsClientEntrypoint : MccNoxesiumEntrypoint() {
+
+    override fun getVersion(): String = "1"
 
     companion object {
         private const val MOD_ID = "build-bugs"
@@ -25,15 +26,14 @@ class BuildBugsClientEntrypoint : ClientModInitializer {
         val version: Version = FabricLoader.getInstance().getModContainer(MOD_ID).get().metadata.version
     }
 
-    override fun onInitializeClient() {
-        NoxesiumFabricMod.initialize()
+    override fun initialize() {
         NoxesiumPacketHandler()
         val manager = FabricClientCommandManager.createNative(ExecutionCoordinator.asyncCoordinator())
         val annotationParser = AnnotationParser(manager, TypeToken.get(FabricClientCommandSource::class.java))
         annotationParser.parse(BuildBugsCommand())
         BuildBugsConfig.createDefaultConfig()
 
-        val resourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, "keybinds")
+        val resourceLocation = Identifier.fromNamespaceAndPath(MOD_ID, "keybinds")
         val keybindCategory = KeyMapping.Category.register(resourceLocation)
 
         val reportKeybinding = KeyBindingHelper.registerKeyBinding(
