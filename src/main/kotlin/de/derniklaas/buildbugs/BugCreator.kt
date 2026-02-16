@@ -7,6 +7,8 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.font.TextFieldHelper
 import net.minecraft.client.multiplayer.ServerData
 import net.minecraft.core.BlockPos
+import net.minecraft.network.chat.ClickEvent
+import net.minecraft.network.chat.Component
 
 object BugCreator {
 
@@ -104,5 +106,28 @@ object BugCreator {
     fun forceGameState(type: String, subType: String, map: String) {
         gameState = ServerState(type, setOf(subType), map)
         Utils.sendDebugMessage("Forced gameState to ${gameState.miniMessageString()}")
+    }
+
+    fun handleChatMessage(message: Component) {
+
+        fun handleClickEvent(event: ClickEvent) {
+            if (event !is ClickEvent.CopyToClipboard && event !is ClickEvent.OpenUrl) return
+
+            val url =
+                if (event is ClickEvent.CopyToClipboard) event.value else (event as ClickEvent.OpenUrl).uri.toString()
+
+            if (url.startsWith(Constants.BUG_REPORT_URL) || url.startsWith(Constants.BUG_REPORT_URL_NEW)) {
+                setClipboard(url)
+            }
+        }
+
+        message.style.clickEvent?.let {
+            handleClickEvent(it)
+        }
+        message.siblings.forEach {
+            it.style.clickEvent?.let { event ->
+                handleClickEvent(event)
+            }
+        }
     }
 }
