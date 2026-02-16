@@ -20,13 +20,13 @@ abstract class ChatMixin {
         if (!Utils.isOnMCCServer()) return
 
         message.style.clickEvent?.let {
-            if (it is ClickEvent.CopyToClipboard && it.value.startsWith(Constants.BUG_REPORT_URL)) {
+            if (it is ClickEvent.CopyToClipboard && (it.value.startsWith(Constants.BUG_REPORT_URL) || it.value.startsWith(Constants.BUG_REPORT_URL_NEW))) {
                 BugCreator.setClipboard(it.value)
             }
         }
         message.siblings.forEach {
             it.style.clickEvent?.let { event ->
-                if (event is ClickEvent.CopyToClipboard && event.value.startsWith(Constants.BUG_REPORT_URL)) {
+                if (event is ClickEvent.CopyToClipboard && (event.value.startsWith(Constants.BUG_REPORT_URL) || event.value.startsWith(Constants.BUG_REPORT_URL_NEW))) {
                     BugCreator.setClipboard(event.value)
                 }
             }

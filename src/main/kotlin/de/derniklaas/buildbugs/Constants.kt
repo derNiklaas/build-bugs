@@ -55,6 +55,7 @@ object Constants {
 
     /* URLs */
     const val BUG_REPORT_URL = "https://p.nox.gs/"
+    const val BUG_REPORT_URL_NEW = "https://bugreport.mccisland.net/"
 
     /* Misc */
     const val UNKNOWN = "Unknown"
