@@ -1,8 +1,15 @@
 package de.derniklaas.buildbugs
 
 object Constants {
-    /* Game types */
+
+    /* Island Lobbies */
     const val LOBBY = "lobby"
+    const val FISHING = "fishing"
+    const val LIMBO = "limbo"
+    const val MAIN_LOBBY = "main_lobby"
+    const val EXTRA_LOBBY = "extra_lobbies"
+
+    /* Game types */
     const val PARKOUR_WARRIOR = "parkour_warrior"
     const val HOLE_IN_THE_WALL = "hole_in_the_wall"
     const val TO_GET_TO_THE_OTHER_SIDE = "tgttos"
@@ -10,9 +17,6 @@ object Constants {
     const val SKY_BATTLE = "sky_battle"
     const val DYNABALL = "dynaball"
     const val ROCKET_SPLEEF_RUSH = "rocket_spleef"
-    const val FISHING = "fishing"
-    const val LIMBO = "limbo"
-    const val MAIN_LOBBY = "main_lobby"
 
     /* Fishing Islands & Grottos */
     const val VERDANT_WOODS = "temperate_1"
@@ -61,7 +65,7 @@ object Constants {
     const val UNKNOWN = "Unknown"
 
     /* Groups */
-    val LOBBIES = listOf(LOBBY, HUB, LIMBO, "main_lobby", "fishing", "game_lobbies")
+    val LOBBIES = listOf(LOBBY, HUB, LIMBO, EXTRA_LOBBY, MAIN_LOBBY, FISHING, "game_lobbies")
     val GAMES = listOf(
         ACE_RACE,
         RAILROAD_RUSH,

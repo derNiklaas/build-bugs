@@ -40,6 +40,8 @@ data class ServerState(
                     "${gameMode.displayName} Lobby"
                 } else if (Constants.MAIN_LOBBY in types) {
                     "Main Lobby"
+                } else if (Constants.EXTRA_LOBBY in types) {
+                    "Event Lobby"
                 } else {
                     ""
                 }
