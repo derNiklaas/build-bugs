@@ -12,11 +12,14 @@ object Utils {
      * See https://docs.advntr.dev/minimessage/format.html for the specs.
      */
     fun sendMiniMessage(message: String, prefix: Boolean = true, vararg replacements: TagResolver) {
-        val player = Minecraft.getInstance().player ?: return
+        val client = Minecraft.getInstance()
+        val player = client.player ?: return
         val mm = MiniMessage.miniMessage()
 
         val parsed = mm.deserialize("${if (prefix) "<gold>[Build Bugs]</gold> " else ""}$message", *replacements)
-        player.sendMessage(parsed)
+        client.execute {
+            player.sendMessage(parsed)
+        }
     }
 
     /**
