@@ -24,10 +24,20 @@ class BuildBugsClientEntrypoint : MccNoxesiumEntrypoint() {
         private const val MOD_ID = "build-bugs"
         val config = BuildBugsConfig.fromFile()
         val version: Version = FabricLoader.getInstance().getModContainer(MOD_ID).get().metadata.version
+
+        /**
+         * Strong reference to the packet handler so it is never garbage collected.
+         *
+         * Noxesium registers packet listeners against a [java.lang.ref.WeakReference] to the
+         * handler instance and silently drops them once that reference is collected. Without
+         * keeping it alive here, the MCC server/game-state packets stop being delivered, leaving
+         * [BugCreator.gameState] stuck on [de.derniklaas.buildbugs.utils.ServerState.UNKNOWN].
+         */
+        private var packetHandler: NoxesiumPacketHandler? = null
     }
 
     override fun initialize() {
-        NoxesiumPacketHandler()
+        packetHandler = NoxesiumPacketHandler()
         val manager = FabricClientCommandManager.createNative(ExecutionCoordinator.asyncCoordinator())
         val annotationParser = AnnotationParser(manager, TypeToken.get(FabricClientCommandSource::class.java))
         annotationParser.parse(BuildBugsCommand())
