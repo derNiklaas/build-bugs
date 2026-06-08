@@ -14,6 +14,7 @@ class NoxesiumPacketHandler {
         ) { _, packet, _ ->
             onServerPacket(packet)
         }
+
         MccPackets.CLIENTBOUND_MCC_GAME_STATE.addListener<Any, ClientboundMccGameStatePacket>(
             this,
             ClientboundMccGameStatePacket::class.java

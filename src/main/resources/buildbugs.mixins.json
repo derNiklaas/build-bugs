@@ -6,6 +6,7 @@
   "mixins": [
     "ChatMixin",
     "MinecraftMixin",
+    "NoxesiumPayloadGroupMixin",
     "TitleGuiMixin"
   ],
   "client": [],
