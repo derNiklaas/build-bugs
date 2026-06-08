@@ -19,6 +19,7 @@ enum class MCCGame(val displayName: String, val types: Set<String>) {
     GRID_RUNNERS("Grid Runners", setOf(Constants.GRID_RUNNERS)),
     BINGO_BUT_FAST("Bingo But Fast", setOf(Constants.BINGO_BUT_FAST)),
     BUILD_MART("Build Mart", setOf(Constants.BUILD_MART)),
+    TWILIGHT_TRIALS("Twilight Trials", setOf(Constants.TWILIGHT_TRIALS)),
     DODGEBOLT("Dodgebolt", setOf(Constants.DODGEBOLT)),
     FISHING("", setOf(Constants.FISHING)),
     LOBBY("", setOf(Constants.LOBBY)),

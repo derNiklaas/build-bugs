@@ -74,7 +74,7 @@ object BugCreator {
 
     private fun getCopyMessage(area: String, map: String, position: BlockPos): String {
         val start = if (area.isNotBlank()) "$area, " else ""
-        return "[$start${if (map.isNotBlank() && map != Constants.UNKNOWN) map else "${position.x} ${position.y} ${position.z}"}] "
+        return "[$start${if (map.isNotBlank() && map != Constants.UNKNOWN && map != Constants.TWILIGHT_TRIALS_MAP) map else "${position.x} ${position.y} ${position.z}"}] "
     }
 
     /**

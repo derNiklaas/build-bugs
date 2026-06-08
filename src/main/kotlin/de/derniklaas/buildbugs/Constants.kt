@@ -63,6 +63,8 @@ object Constants {
 
     /* Misc */
     const val UNKNOWN = "Unknown"
+    const val TWILIGHT_TRIALS = "luminescence"
+    const val TWILIGHT_TRIALS_MAP = "The Twilight Trials"
 
     /* Groups */
     val LOBBIES = listOf(LOBBY, HUB, LIMBO, EXTRA_LOBBY, MAIN_LOBBY, FISHING, "game_lobbies")
@@ -84,7 +86,8 @@ object Constants {
         PARKOUR_WARRIOR,
         SKY_BATTLE,
         DYNABALL,
-        ROCKET_SPLEEF_RUSH
+        ROCKET_SPLEEF_RUSH,
+        TWILIGHT_TRIALS
     )
     val ALL_TYPES = LOBBIES + GAMES
 }
