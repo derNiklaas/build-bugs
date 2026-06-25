@@ -1,7 +1,7 @@
 package de.derniklaas.buildbugs.mixin
 
 import com.noxcrew.noxesium.api.network.payload.NoxesiumPayloadGroup
-import org.apache.commons.lang3.function.TriConsumer
+import com.noxcrew.noxesium.api.util.TriConsumer
 import org.spongepowered.asm.mixin.Mixin
 import org.spongepowered.asm.mixin.injection.At
 import org.spongepowered.asm.mixin.injection.Redirect
@@ -21,7 +21,7 @@ abstract class NoxesiumPayloadGroupMixin {
         at = At(
             value = "INVOKE",
             target = "Lcom/noxcrew/noxesium/api/network/payload/NoxesiumPayloadGroup;" +
-                "acceptAny(Lorg/apache/commons/lang3/function/TriConsumer;Ljava/lang/Object;Ljava/util/UUID;Ljava/lang/Object;)V"
+                "acceptAny(Lcom/noxcrew/noxesium/api/util/TriConsumer;Ljava/lang/Object;Ljava/util/UUID;Ljava/lang/Object;)V"
         )
     )
     fun buildbugsIsolateListenerExceptions(

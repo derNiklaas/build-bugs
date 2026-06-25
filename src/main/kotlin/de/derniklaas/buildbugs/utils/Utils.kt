@@ -1,6 +1,7 @@
 package de.derniklaas.buildbugs.utils
 
 import de.derniklaas.buildbugs.BuildBugsClientEntrypoint
+import net.kyori.adventure.platform.modcommon.MinecraftClientAudiences
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 import net.minecraft.client.Minecraft
@@ -13,12 +14,12 @@ object Utils {
      */
     fun sendMiniMessage(message: String, prefix: Boolean = true, vararg replacements: TagResolver) {
         val client = Minecraft.getInstance()
-        val player = client.player ?: return
+        client.player ?: return
         val mm = MiniMessage.miniMessage()
 
         val parsed = mm.deserialize("${if (prefix) "<gold>[Build Bugs]</gold> " else ""}$message", *replacements)
         client.execute {
-            player.sendMessage(parsed)
+            MinecraftClientAudiences.of().audience().sendMessage(parsed)
         }
     }
 

@@ -2,10 +2,10 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     kotlin("jvm")
-    id("fabric-loom")
+    id("net.fabricmc.fabric-loom")
     `maven-publish`
     java
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.3.0"
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.4.0"
 }
 
 group = property("maven_group")!!
@@ -38,19 +38,18 @@ repositories {
 
 dependencies {
     minecraft("com.mojang:minecraft:${property("minecraft_version")}")
-    mappings(loom.officialMojangMappings())
-    modImplementation("net.fabricmc:fabric-loader:${property("loader_version")}")
+    implementation("net.fabricmc:fabric-loader:${property("loader_version")}")
 
-    modImplementation("net.fabricmc:fabric-language-kotlin:${property("fabric_kotlin_version")}")!!
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_api_version")}")
-    modCompileOnly("com.noxcrew.noxesium:fabric:${property("noxesium_version")}")
-    modImplementation("net.kyori:adventure-platform-fabric:${property("adventure_version")}")
-    modImplementation(include("org.incendo:cloud-fabric:${property("cloud_version")}")!!)
-    modImplementation(include("org.incendo:cloud-annotations:2.0.0")!!)
-    modImplementation(include("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0")!!)
-    modImplementation(include("org.incendo:cloud-kotlin-extensions:2.0.0")!!)
+    implementation("net.fabricmc:fabric-language-kotlin:${property("fabric_kotlin_version")}")!!
+    implementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_api_version")}")
+    compileOnly("com.noxcrew.noxesium:fabric:${property("noxesium_version")}")
+    implementation("net.kyori:adventure-platform-fabric:${property("adventure_version")}")
+    implementation(include("org.incendo:cloud-fabric:${property("cloud_version")}")!!)
+    implementation(include("org.incendo:cloud-annotations:2.0.0")!!)
+    implementation(include("org.incendo:cloud-kotlin-coroutines-annotations:2.0.0")!!)
+    implementation(include("org.incendo:cloud-kotlin-extensions:2.0.0")!!)
 
-    modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.2")
+    runtimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.2")
 }
 
 tasks {
@@ -70,11 +69,11 @@ tasks {
     publishing {
         publications {
             create<MavenPublication>("mavenJava") {
-                artifact(remapJar) {
-                    builtBy(remapJar)
+                artifact(jar) {
+                    builtBy(jar)
                 }
                 artifact(kotlinSourcesJar) {
-                    builtBy(remapSourcesJar)
+                    builtBy(kotlinSourcesJar)
                 }
             }
         }
@@ -88,7 +87,7 @@ tasks {
 
     compileKotlin {
         compilerOptions {
-            jvmTarget = JvmTarget.fromTarget("21")
+            jvmTarget = JvmTarget.fromTarget("25")
         }
     }
 }

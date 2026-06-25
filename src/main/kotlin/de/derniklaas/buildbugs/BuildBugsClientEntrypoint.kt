@@ -6,7 +6,7 @@ import de.derniklaas.buildbugs.utils.Utils
 import io.leangen.geantyref.TypeToken
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper
 import net.fabricmc.loader.api.FabricLoader
 import net.fabricmc.loader.api.Version
 import net.minecraft.client.KeyMapping
@@ -46,12 +46,12 @@ class BuildBugsClientEntrypoint : MccNoxesiumEntrypoint() {
         val resourceLocation = Identifier.fromNamespaceAndPath(MOD_ID, "keybinds")
         val keybindCategory = KeyMapping.Category.register(resourceLocation)
 
-        val reportKeybinding = KeyBindingHelper.registerKeyBinding(
+        val reportKeybinding = KeyMappingHelper.registerKeyMapping(
             KeyMapping(
                 "key.buildbugs.report", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_U, keybindCategory
             )
         )
-        val bugreportKeybinding = KeyBindingHelper.registerKeyBinding(
+        val bugreportKeybinding = KeyMappingHelper.registerKeyMapping(
             KeyMapping(
                 "key.buildbugs.bugreport", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_I, keybindCategory
             )
